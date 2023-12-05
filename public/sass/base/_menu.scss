@@ -1,0 +1,54 @@
+.logo-container{
+    text-align: center;
+
+    .logo_picture{
+        width: 60%;
+        margin: 2rem auto;
+    }
+    
+}
+
+
+
+.icon_login{
+    margin: 1rem;
+
+    .bi{
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn{
+        margin: 1rem 0 ; 
+        padding: .3rem;
+    }
+}
+
+
+@media screen and ( min-width:map-get($version,pc)){
+    .h-header{
+        display:grid;
+        grid-template-columns: repeat(5, 1fr);
+        margin: 1rem auto;
+        height: 10rem;
+        
+        
+    }
+
+    .logo-container {
+        grid-column: 4/5;
+        margin: 1rem auto;
+        width: 100%;
+        margin: 3rem 0rem 1rem 12rem;
+        
+    }
+
+    .icon_login{
+        grid-column: 1;
+        top: -6.5rem;
+        left: 0rem;
+        
+        
+    }
+
+}

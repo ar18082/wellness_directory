@@ -30,9 +30,6 @@ class Prestataire
     #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Images::class)]
     private Collection $images;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Utilisateur $utilisateur = null;
-
     #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
@@ -140,18 +137,6 @@ class Prestataire
                 $image->setPrestataire(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(?Utilisateur $utilisateur): static
-    {
-        $this->utilisateur = $utilisateur;
 
         return $this;
     }

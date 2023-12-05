@@ -1,0 +1,149 @@
+@charset "UTF-8";
+/* couleurs*/
+/*Fond d'écran*/
+/*media quieri*/
+html {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  max-width: 1250px;
+  margin: 1rem auto;
+}
+
+body {
+  color: #000;
+  margin: 0 auto;
+}
+
+button {
+  background-color: #87d02a;
+  color: #fff;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin: 2rem;
+  color: #87d02a;
+}
+
+.logo-container {
+  text-align: center;
+}
+.logo-container .logo_picture {
+  width: 60%;
+  margin: 2rem auto;
+}
+
+.icon_login {
+  margin: 1rem;
+}
+.icon_login .bi {
+  width: 20px;
+  height: 20px;
+}
+.icon_login .btn {
+  margin: 1rem 0;
+  padding: 0.3rem;
+}
+
+@media screen and (min-width: 850px) {
+  .h-header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 1rem auto;
+    height: 10rem;
+  }
+  .logo-container {
+    grid-column: 4/5;
+    margin: 1rem auto;
+    width: 100%;
+    margin: 3rem 0rem 1rem 12rem;
+  }
+  .icon_login {
+    grid-column: 1;
+    top: -6.5rem;
+    left: 0rem;
+  }
+}
+.h-hamburger-icon {
+  font-size: 3rem;
+  position: absolute;
+  right: 3rem;
+  top: 2.5rem;
+  color: #000;
+}
+
+.navigation {
+  display: none;
+  position: absolute;
+  width: 90%;
+  left: 0rem;
+  top: 14rem;
+}
+.navigation.is-active {
+  display: block;
+  z-index: 1;
+}
+.navigation ul {
+  background-color: #87d02a;
+  padding: 1rem;
+  margin: 1rem;
+  text-align: center;
+  list-style: none;
+  height: 680px;
+  width: 100%;
+  position: absolute;
+  top: -8rem;
+  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+}
+.navigation li {
+  margin: 0rem 0rem 0.7rem;
+}
+.navigation a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 850px) {
+  .h-hamburger-icon .fa {
+    display: none;
+  }
+  .navigation {
+    display: block;
+    width: 100%;
+    height: 2rem;
+    top: 2.3rem;
+    text-align: center;
+  }
+  .navigation ul {
+    display: inline;
+    background: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    list-style: none;
+    position: relative;
+    top: 4.5rem;
+  }
+  .navigation li {
+    display: inline;
+    padding: 0.5rem 0.5rem 0;
+    background-color: #87d02a;
+    text-align: center;
+    border-radius: 0.375rem;
+    position: relative;
+  }
+  .navigation a {
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}
+
+/*# sourceMappingURL=screen.css.map */
