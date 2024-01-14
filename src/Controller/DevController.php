@@ -81,4 +81,14 @@ class DevController extends AbstractController
             
         ]);
     }
+    #[Route('/dev', name: 'app_dev')]
+    public function devConfirm(Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        
+        return $this->render('dev/modifCateg.html.twig', [
+            'title' => 'ok',
+            
+        ]);
+    }
 }
