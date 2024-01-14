@@ -21,22 +21,23 @@ class CategorieDeServices
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $EnAvant = null;
+    #[ORM\Column(nullable: false)]
+    private ?bool $EnAvant = false;
 
     #[ORM\Column(nullable: true)]
     private ?bool $Valide = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorieDeServices', targetEntity: Proposer::class)]
-    private Collection $proposers;
-
     #[ORM\OneToMany(mappedBy: 'categorieDeServices', targetEntity: Promotion::class)]
     private Collection $promotions;
 
+    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'CategorieDeServices')]
+    private Collection $prestataires;
+
     public function __construct()
     {
-        $this->proposers = new ArrayCollection();
+       
         $this->promotions = new ArrayCollection();
+        $this->prestataires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,36 +94,6 @@ class CategorieDeServices
     }
 
     /**
-     * @return Collection<int, Proposer>
-     */
-    public function getProposers(): Collection
-    {
-        return $this->proposers;
-    }
-
-    public function addProposer(Proposer $proposer): static
-    {
-        if (!$this->proposers->contains($proposer)) {
-            $this->proposers->add($proposer);
-            $proposer->setCategorieDeServices($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProposer(Proposer $proposer): static
-    {
-        if ($this->proposers->removeElement($proposer)) {
-            // set the owning side to null (unless already changed)
-            if ($proposer->getCategorieDeServices() === $this) {
-                $proposer->setCategorieDeServices(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Promotion>
      */
     public function getPromotions(): Collection
@@ -147,6 +118,33 @@ class CategorieDeServices
             if ($promotion->getCategorieDeServices() === $this) {
                 $promotion->setCategorieDeServices(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prestataire>
+     */
+    public function getPrestataires(): Collection
+    {
+        return $this->prestataires;
+    }
+
+    public function addPrestataire(Prestataire $prestataire): static
+    {
+        if (!$this->prestataires->contains($prestataire)) {
+            $this->prestataires->add($prestataire);
+            $prestataire->addCategorieDeService($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestataire(Prestataire $prestataire): static
+    {
+        if ($this->prestataires->removeElement($prestataire)) {
+            $prestataire->removeCategorieDeService($this);
         }
 
         return $this;

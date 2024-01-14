@@ -3,7 +3,42 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block body %}
- <div>
-    <h2>ceci est la page d'acceuil </h2>
- </div>
+ <div class="container_main">
+   <div class="main_homePage">
+      <div class="container_slider">
+         {#
+            intégrer des images et les faire défiler faire une boucle pour afficher les images
+         #}
+         <div class="container_slider_img">
+            <img src="{{asset('img/slider-1.jpg')}}" class="slider_img" alt="...">
+         </div>
+      </div>
+      <div class="container_categorieDeServices" id="sidebar">
+         <h2>Categories de services</h2>
+         <ul class="categorieDeServices_list">
+            {% for service in categorieDeServices %}
+               {% if service.valide %}
+                  <li class='button'><a href="{{path('app_categorie_de_services', {'id': service.id})}}">{{ service.nom }}</a></li>
+               {% endif %}
+            {% endfor %}           
+         </ul>
+      </div>
+      <div class="container_recherche">
+         {% include 'block/recherche.twig' %}
+      </div>
+      <div class = "container_serviceEnAvant">
+         <div class="card" style="width: 18rem;">
+            <img src="{{asset('img/services-aides-a-domicile.png')}}" class="card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">{{serviceDuMois.nom}}</h5>
+               {#<p class="card-text">{{serviceDuMois.description}}</p>#}
+               <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button">Plus de détails</a>
+            </div>
+         </div>
+            
+        
+      </div>
+      
+   </div>    
+</div>
 {% endblock %}

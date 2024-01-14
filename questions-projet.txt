@@ -1,0 +1,27 @@
+- il y a les catégories de services dans la db mais pas les services ?????
+        reponse : supprimer les fleches car pas de sous categ 
+- virer la table proposer et refaire la relation entre les deux entity enfants 
+    ok fait 
+
+- dans la page categorie de service est ce qu'il faut remettre le slider 
+ selon ce que je lis non 
+ donc est ce que je peux faire un slider d'image correspondant à la categorie ? 
+
+reflexion : 
+    -   créer des fonctions qui permettrait de ne pas avoir de la rondedance de code 
+        exemple l'appel de toutes les catégories de services afin de pouvoir l'appeler 
+    
+    -   créer un block pour la sidebar 
+
+    
+
+ 
+
+justifier congé de paternité  : papier du doc
+
+27/11 
+07/12
+12/12
+14/12
+19/12
+21/12

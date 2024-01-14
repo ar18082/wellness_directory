@@ -39,11 +39,11 @@ class Prestataire
     #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Favori::class)]
     private Collection $favoris;
 
-    #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Proposer::class)]
-    private Collection $proposers;
-
     #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Promotion::class)]
     private Collection $promotions;
+
+    #[ORM\ManyToMany(targetEntity: CategorieDeServices::class, inversedBy: 'prestataires')]
+    private Collection $CategorieDeServices;
 
    
 
@@ -53,8 +53,8 @@ class Prestataire
         $this->commentaires = new ArrayCollection();
         $this->stages = new ArrayCollection();
         $this->favoris = new ArrayCollection();
-        $this->proposers = new ArrayCollection();
         $this->promotions = new ArrayCollection();
+        $this->CategorieDeServices = new ArrayCollection();
         
     }
 
@@ -232,36 +232,6 @@ class Prestataire
     }
 
     /**
-     * @return Collection<int, Proposer>
-     */
-    public function getProposers(): Collection
-    {
-        return $this->proposers;
-    }
-
-    public function addProposer(Proposer $proposer): static
-    {
-        if (!$this->proposers->contains($proposer)) {
-            $this->proposers->add($proposer);
-            $proposer->setPrestataire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProposer(Proposer $proposer): static
-    {
-        if ($this->proposers->removeElement($proposer)) {
-            // set the owning side to null (unless already changed)
-            if ($proposer->getPrestataire() === $this) {
-                $proposer->setPrestataire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Promotion>
      */
     public function getPromotions(): Collection
@@ -287,6 +257,30 @@ class Prestataire
                 $promotion->setPrestataire(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CategorieDeServices>
+     */
+    public function getCategorieDeServices(): Collection
+    {
+        return $this->CategorieDeServices;
+    }
+
+    public function addCategorieDeService(CategorieDeServices $categorieDeService): static
+    {
+        if (!$this->CategorieDeServices->contains($categorieDeService)) {
+            $this->CategorieDeServices->add($categorieDeService);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorieDeService(CategorieDeServices $categorieDeService): static
+    {
+        $this->CategorieDeServices->removeElement($categorieDeService);
 
         return $this;
     }

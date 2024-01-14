@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+
+{% block body %}
+
+<h1> Catégorie de services : {{service.nom}}</h1>
+{#
+fiche présentation prestataire repris dans la catégorie de service sélectionner 
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+#}
+
+{#
+pour le présentation de la catégorie : 
+
+    un slider avec des images de la catégorie 
+    la sidebar des autres catégories  
+    nom de la catégorie en h1 centrer 
+    description de de la catég 
+    pagination des prestataires repris dans la categ 
+
+
+#}
+
+{% endblock %}
