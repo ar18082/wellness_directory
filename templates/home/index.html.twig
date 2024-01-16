@@ -27,18 +27,54 @@
          {% include 'block/recherche.twig' %}
       </div>
       <div class = "container_serviceEnAvant">
-         <div class="card" style="width: 18rem;">
+         <div class="card_serviceEnAvant " >
             <img src="{{asset('img/services-aides-a-domicile.png')}}" class="card-img-top" alt="...">
-            <div class="card-body">
+            <div class=" serviceEnAvant-body">
+               {# au survol le nom et le boutton plus de détails coder dans sass #}
                <h5 class="card-title">{{serviceDuMois.nom}}</h5>
-               {#<p class="card-text">{{serviceDuMois.description}}</p>#}
+               <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button"><button class="button">Plus de détails</button></a>
+            </div>
+         </div>  
+      </div>
+      <div class="container_prestataire_recent">
+         <div class ="card_prestataire_recent card" style="width: 18rem;">
+            <img src="..." class="img_prestataire_recent card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">prestataire_recent</h5>
                <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button">Plus de détails</a>
             </div>
          </div>
-            
-        
       </div>
-      
+      <div class="container_prestataire_recent">
+         <div class ="card_prestataire_recent card" style="width: 18rem;">
+            <img src="..." class="img_prestataire_recent card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">prestataire_recent</h5>
+               <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button">Plus de détails</a>
+            </div>
+         </div>
+         <div class ="card_prestataire_recent card" style="width: 18rem;">
+            <img src="..." class="img_prestataire_recent card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">prestataire_recent</h5>
+               <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button">Plus de détails</a>
+            </div>
+         </div>
+         <div class ="card_prestataire_recent card" style="width: 18rem;">
+            <img src="..." class="img_prestataire_recent card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">prestataire_recent</h5>
+               <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button">Plus de détails</a>
+            </div>
+         </div>
+         <div class ="card_prestataire_recent card" style="width: 18rem;">
+            <img src="..." class="img_prestataire_recent card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">prestataire_recent</h5>
+               <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button">Plus de détails</a>
+            </div>
+         </div>
+      </div>
    </div>    
 </div>
 {% endblock %}

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\CategorieDeServices;
 use App\Entity\Prestataire;
+use App\Entity\Utilisateur;
 use App\Form\RechercheType;
+use App\Service\PrestataireRecent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,21 +33,32 @@ class HomeController extends AbstractController
         */
         $repository = $entityManager->getRepository(CategorieDeServices::class);
         $categorieDeServices = $repository->findAll();
-        // choix d'un service mis en avant pour une durée d'un mois (choix du 1er du mois -> au dernier jour du mois !!! 30,31 ou 28!!!!!)
-        $serviceDuMois = $repository->findOneBy(['id' => 1 ]);
 
+
+        // choix à faire dans le dashboard de l'admin
+        // service du mois mis à l'honneur 
+        $serviceDuMois = $repository->findOneBy(['EnAvant' => 1 ]);
+        
        
         // récupération des prestataires
-        $repository = $entityManager->getRepository(Prestataire::class);
+        /*
+        dans prestataire repository créer une requete custom avec un joinleft d'utilisateur 
+        */         $repository = $entityManager->getRepository(Prestataire::class);
+        //$prestataires = $repository->findBy([], ['inscription' => 'DESC'], 4);
         $prestataires = $repository->findAll();
-        // récupération des 4 prestataires récement inscrit 
+
+
+        //dd(new Utilisateur);
+
+        
        
 
         return $this->render('home/index.html.twig', [
             'title' => 'Page d\'acceuil',
             'form' =>$form ->createView(),
-            'categorieDeServices' => $categorieDeServices,
-            'serviceDuMois' => $serviceDuMois
+            'categorieDeServices' => $categorieDeServices, // toutes les catégories de service present dans la sidebar
+            'serviceDuMois' => $serviceDuMois, // services mis en avant pour 1 mois
+            'prestataires' => $prestataires // 4 derniers prestataires inscrit
 
         ]);
     }

@@ -86,8 +86,8 @@ class DevController extends AbstractController
     {
 
         
-        return $this->render('dev/modifCateg.html.twig', [
-            'title' => 'ok',
+        return $this->render('error/error_404.html.twig', [
+            
             
         ]);
     }
