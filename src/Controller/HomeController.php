@@ -42,14 +42,13 @@ class HomeController extends AbstractController
        
         // récupération des prestataires
         /*
-        dans prestataire repository créer une requete custom avec un joinleft d'utilisateur 
-        */         $repository = $entityManager->getRepository(Prestataire::class);
-        //$prestataires = $repository->findBy([], ['inscription' => 'DESC'], 4);
-        $prestataires = $repository->findAll();
+        dans prestataire repository créer une requete custom avec un joinleft d'utilisateur */
+        $repository = $entityManager->getRepository(Utilisateur::class);
+        $prestataires = $repository->FindPrestaRecent();
+        
+        //dd($prestataires[0]->getPrestataire()->getNom());
 
-
-        //dd(new Utilisateur);
-
+       
         
        
 

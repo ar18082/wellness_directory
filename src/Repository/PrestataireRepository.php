@@ -20,6 +20,23 @@ class PrestataireRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Prestataire::class);
     }
+   /* public function FindPrestaRecent2(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery('
+            SELECT u
+            FROM App\Entity\Utilisateur u
+            LEFT JOIN u.prestataire p
+            WHERE u.inscription IS NOT NULL
+            ORDER BY u.inscription DESC
+            
+        ');
+
+        $query->setMaxResults(4);
+
+        return $query->getResult();
+    }*/
 
 //    /**
 //     * @return Prestataire[] Returns an array of Prestataire objects
