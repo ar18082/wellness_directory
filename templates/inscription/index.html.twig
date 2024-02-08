@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+
+{% block body %}
+
+
+<h1 id="title_form">Quel type d'utilisateur êtes vous ? </h1>
+
+
+<div class="progress" id="P_Bar">
+  <div class="progress-bar" id="Pro_Bar" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<div class="container_typeUserBtn "   id="typeUserBtn">
+    <div class="container_prestataireBtn ">
+         <button class="button" id="prestataireBtn">Prestataire</button>
+    </div>
+    <div class="container_internauteBtn ">
+         <button class="button" id="internauteBtn">Internaute</button>
+    </div>
+
+     
+    
+</div> 
+
+
+{% include 'block/form_prestataire.twig' %}
+{% include 'block/form_internaute.twig' %}
+{% include 'block/form_stage.twig' %}
+{% include 'block/form_promotion.twig' %}
+
+
+
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="{{ asset('js/inscription_form.js') }}"></script>
+{% endblock %}
+
+
+
+
+

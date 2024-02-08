@@ -15,6 +15,15 @@ reflexion :
 
     
 
+inscription : 
+si le delai de validité du token est dépassé supprimer l'email et le passeword
+créer un boutton pour que user annule son inscription
+
+recupérer l'url d'ou l'user est parti, si homepage -> fiche profil sinon retour à la page d'ou il est parti 
+
+si utilisateur bloqué apres 4 essais lors de l'authentification envoyer un mail à l'adresse mail de user pour signaler compte bloqué 
+
+les bouttons doivent etre dynamique 
  
 
 justifier congé de paternité  : papier du doc

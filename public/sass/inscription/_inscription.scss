@@ -1,0 +1,46 @@
+.container_typeUserBtn{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1rem;
+    text-align:  center;
+
+    & button{
+        
+        font-size: 2rem;
+    }
+}
+
+.container_prestataireBtn{
+    grid-column: 1;
+    margin: 1rem;
+}
+
+.container_internauteBtn{
+   
+    margin: 1rem;
+}
+
+.internauteForm, .prestataireForm, .stageForm, .promotionForm {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+#P_Bar {
+    display: none;
+}
+
+#Pro_Bar{
+    background-color: map-get($map: $background-color, $key: background-4 );
+}
+
+.input-group{
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.internauteForm:last-child{
+    & button{
+        padding: 1rem 2rem;
+    }
+}
