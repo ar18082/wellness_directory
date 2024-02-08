@@ -21,7 +21,7 @@ class InscriptionController extends AbstractController
     {
         
         return $this->render('inscription/index.html.twig', [
-            'controller_name' => 'Quel type d\'utilisateur êtes vous ? ',
+            'controller_name' => 'test',
            
         ]);
     }
@@ -31,9 +31,15 @@ class InscriptionController extends AbstractController
     {
         $data = $request->toArray();
 
-        dd($data);
+        //var_dump($data);
 
-        return new JsonResponse('success');
+        return $this->redirectToRoute('app_inscription');
+            
+           
+       
+       // dd($data);
+
+       // return new JsonResponse('success');
       
         /*$role = $data['role'];
         $fileData = $data['file'];
