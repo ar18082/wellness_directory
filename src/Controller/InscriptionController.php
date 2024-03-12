@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 //use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use App\Entity\Stage;
 use App\Entity\Promotion;
@@ -43,124 +44,81 @@ class InscriptionController extends AbstractController
     }
 
     #[Route('/inscription/valide', name: 'app_inscription_valide')]
-    public function inscValid(Request $request, EntityManagerInterface $entityManager): Response
+    public function inscValid(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
-      
-       /* 
-            //dd($request);
-    
 
-        $newsletter = $request->request->get('newsletter'); 
-        if($newsletter == 'on'){
-            $newsletter=true;
-        }else{
-            $newsletter=false;
-        };
-        
-        if($request->request->get('role') == 'INT'){
-            $internaute = new Internaute(); 
-            $internaute->setNom($request->request->get('nom_pre'));
+        $role = $request->request->get('role');
+    
+        if($role == 'INT'){
+            $utilisateurId = $request->request->get('user_id_int');
+            $internaute = new Internaute();
+            $internaute->setNom($request->request->get('nom')) ;
             $internaute->setPrenom($request->request->get('prenom'));
-            $internaute->setNewsletter($newsletter); 
+            
+            if($request->request->get('newsletter')){
+                $internaute->setNewsletter($request->request->get('newsletter'));
+            }else{
+                $internaute->setNewsletter($request->request->get('newsletter'));
+            }
 
             $entityManager->persist($internaute);
-            //$entityManager->flush();
-            
-            $id_int = $internaute->getId();
+            $entityManager->flush();
 
-            $internauteRepository = $entityManager->getRepository(Internaute::class);
-            $lastInternaute = $internauteRepository->findOneBy([], ['createdAt' => 'DESC']);
-            
-            $id = $request->request->get('user_id_int');
-           
-        }
-
-        if($request->request->get('role') == 'PRE'){
+        }else{
+            $utilisateurId = $request->request->get('user_id_pre');
             $prestataire = new Prestataire();
             $prestataire->setNom($request->request->get('nom_pre'));
             $prestataire->setSiteInternet($request->request->get('Site_internet'));
             $prestataire->setNumTel($request->request->get('telephone'));
             $prestataire->setNumTva($request->request->get('tva'));
-
-
-
+            
             $entityManager->persist($prestataire);
-
-            if(!empty($request->request->get('nom_stg'))){
-                $stage = new Stage();
-                $stage->setNom($request->request->get('nom_stg'));
-                $stage->setDescription($request->request->get('description_stg'));
-                $stage->setTarif($request->request->get('tarif_stg'));
-                $stage->setDebut($request->request->get('dateIn_stg'));
-                $stage->setFin($request->request->get('dateOut_stg'));
-                $stage->setAffichageDe($request->request->get('affichageIn_stg'));
-                $stage->setAffichageJusque($request->request->get('affichageOut_stg'));
-
-                $entityManager->persist($stage);
-                
-
-            }
-            if(!empty($request->request->get('nom_promo'))){
-                $promotion = new Promotion();
-                $promotion->setNom($request->request->get('nom_promo'));
-                $promotion->setDescription($request->request->get('description_promo'));
-                $promotion->setDebut($request->request->get('dateIn_promo'));
-                $promotion->setFin($request->request->get('dateOut_promo'));
-
-                $entityManager->persist($promotion);
-            }
-                      
-            //$entityManager->flush();
-
-            $id_pre = $prestataire->getId();
-
-            $id = $request->request->get('user_id_pre');
-        }  
+            $entityManager->flush();
 
 
-
-
+        }
 
         $repository = $entityManager->getRepository(Utilisateur::class);
-        $utilisateur = $repository->find($request->request->get($id));
-        $utilisateur->setRoles($request->request->get('role'));
+        $utilisateur = $repository->find($utilisateurId);
         $utilisateur->setAdresseNumber($request->request->get('numero'));
         $utilisateur->setAdresseRue($request->request->get('rue'));
+        $utilisateur->setRoles([$role]);
 
+        if($role == 'INT'){
+        $inter_Id = $internaute->getId();
+        $internaute = $entityManager->find(Internaute::class, $inter_Id);
+        $utilisateur->setInternaute($internaute);
+    
+        }else{
+        $presta_Id = $prestataire->getId();
+        $prestataire = $entityManager->find(Prestataire::class, $presta_Id);
+        $utilisateur->setPrestataire($prestataire);
+        
+        }
+        $entityManager->persist($utilisateur);
+        $entityManager->flush();
 
-
-
+    
+                        
+        $form = $this->createForm(RechercheType::class);
+        $form->handleRequest($request);
 
         
-*/
-$form = $this->createForm(RechercheType::class);
-$form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()) {
-    $datas = $form->getData();
-    return $this->redirectToRoute('app_home');
-}
+        //récupération des catégories de services 
+        $repository = $entityManager->getRepository(CategorieDeServices::class);
+        $categorieDeServices = $repository->findBy(['Valide' => true]);
 
-//récupération des catégories de services 
-/* 
-    attention introduire un if valide == true
-*/
-$repository = $entityManager->getRepository(CategorieDeServices::class);
-$categorieDeServices = $repository->findAll();
+        // choix à faire dans le dashboard de l'admin
+        // service du mois mis à l'honneur 
+        $serviceDuMois = $repository->findOneBy(['EnAvant' => 1 ]);
 
 
-// choix à faire dans le dashboard de l'admin
-// service du mois mis à l'honneur 
-$serviceDuMois = $repository->findOneBy(['EnAvant' => 1 ]);
+        // récupération des prestataires récent
+        $repository = $entityManager->getRepository(Utilisateur::class);
+        $prestataires = $repository->FindPrestaRecent();
 
-
-// récupération des prestataires
-/*
-dans prestataire repository créer une requete custom avec un joinleft d'utilisateur */
-$repository = $entityManager->getRepository(Utilisateur::class);
-$prestataires = $repository->FindPrestaRecent();
-
-//dd($prestataires[0]->getPrestataire()->getNom());
-        
+     
+                
         
         return $this->render('home/index.html.twig', [
             'title' => 'Page d\'acceuil',
@@ -171,146 +129,5 @@ $prestataires = $repository->FindPrestaRecent();
 
         ]);
     }
-
-    #[Route('/inscription/json', name: 'inscription_json', methods:['POST'])]
-    public function formulaire_inscription(Request $request, EntityManagerInterface $entityManager)
-    {
-        $datas = $request->toArray();
-
-        dump($datas);
-
-        die();
-
-        //return $this->redirectToRoute('app_inscription');
-            
-           
-       
-       // dd($data);
-
-       return new JsonResponse('success');
-      
-        /*$role = $data['role'];
-        $fileData = $data['file'];
-
-        if ($role == 'PRE') {
-            $prestataireData = $data['prestataire'];
-            $stageData = $data['stage'];
-            $promotionData = $data['promotion'];
-
-            $prestataire = new Prestataire();
-            $prestataire->setNom($prestataireData['nom']);
-            $prestataire->setNumTva($prestataireData['tva']);
-            $prestataire->setNumTel($prestataireData['telephone']);
-            $prestataire->setSiteInternet($prestataireData['site']);
-
-            $entityManager->persist($prestataire);
-
-            $stage = new Stage();
-            $stage->setNom($stageData['nom']);
-            $stage->setDescription($stageData['description']);
-            $stage->setTarif($stageData['tarif']);
-            $stage->setDebut(new \DateTime($stageData['date_debut_stg'])); 
-            $stage->setFin(new \DateTime($stageData['date_fin_stg'])); 
-
-            $entityManager->persist($stage);
-
-            $promotion = new Promotion();
-            $promotion->setNom($promotionData['nom_promo']);
-            $promotion->setDescription($promotionData['description_promo']);
-            //.......
-
-            $entityManager->persist($promotion);
-
-        }elseif($role == 'INT'){
-            $internauteData = $data['internaute'];
-
-            
-            $internaute = new Internaute();
-            $internaute->setNom($internauteData['nom']);
-            $internaute->setPrenom($internauteData['prenom']);
-           
-            $entityManager->persist($internaute);
-        }else {
-            // si c'est aucun des deux alors l'utilisateur souhaite supprimer son inscription. 
-            
-        }
-
-
-        // traitement du file 
-            /* lier avec internaute et ou avec le prestataire */
-
-
-        //$entityManager->flush();*/
-        //return $this->render('inscription/test.html.twig', []);
-    
-       // return $this->json(['success' => true]);
-    }
-
-    
-
-    
 }
-/*
-- recupérer l'id de l'utilisateur
-- création des différents formulaire 
-- module image : 
- $utilisateurForm = $this->createForm($formType, $utilisateur);
-        $utilisateurForm->handleRequest($request);
-
-        // On récupère l'instance image
-        $image = Utils::getImage($user, $imagesRepository);
-
-        $imagesForm = $this->createForm(ImagesFormType::class, $image);
-        $imagesForm->handleRequest($request);
-
-        // foreach ( $user->getPrestataire()->getImages() as $item ) {dd($item);} 
-        // dd($user->getPrestataire()->getImages()->toArray()[0], $image);
-
-        if ($userForm->isSubmitted() && $userForm->isValid() || $utilisateurForm->isSubmitted() && $utilisateurForm->isValid() || $imagesForm->isSubmitted() && $imagesForm->isValid()) {
-            // On récupère l'image du form
-            $image = $imagesForm->get('nom')->getData();
-
-            if($image) {
-                $folder = $user->getTypeUtilisateur();
-                $id = $utilisateur->getId();
-                
-                $verif = $imagesRepository->findOneBy(['prestataire' => $id]);
-
-                if($verif) {
-                    $oldPicture = $verif->getNom();
-                    $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $oldPicture;
-                    if (file_exists($path)) {
-                        unlink($path);
-                    }
-
-                    $fichier = $pictureService->add($image, $folder);
-
-                    $verif->setNom($fichier);
-                    $utilisateur->addImage($verif);
-                } else {
-                    $fichier = $pictureService->add($image, $folder);
-                    $img = new Images();
-                    $img->setNom($fichier);
-                    $utilisateur->addImage($img);
-                }
-                $entityManager->persist($user);
-                $entityManager->flush();
-                return $this->redirectToRoute('parametre_index', ['id' => $user->getId()]);
-            }
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_home');
-        }
-        
-        return $this->render('parametre/index.html.twig', compact(
-            'categories',
-            'userForm',
-            'utilisateurForm',
-            'imagesForm',
-            'image',
-        ));
-    }
-
-
-*/
+    
