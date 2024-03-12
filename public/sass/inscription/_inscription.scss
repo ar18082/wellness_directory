@@ -20,8 +20,8 @@
     margin: 1rem;
 }
 
-.internauteForm, .prestataireForm, .stageForm, .promotionForm {
-    display: none;
+.prestataireForm, .stageForm, .promotionForm {
+    display: 'none';
     grid-template-columns: repeat(2, 1fr);
 
 }

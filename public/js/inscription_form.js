@@ -1,4 +1,4 @@
-    import axios from 'axios';
+/*    //import axios from '../../node_modules/axios';
     // ne pas oublié de récupéré l'id user et d'inserer la data 
       var datas = {
         role: '',
@@ -43,6 +43,8 @@
             date_fin_promo: ''
 
         }
+
+        
 };
 
     
@@ -51,9 +53,10 @@
         //console.log("ok ")
         // Écoutez le clic sur le bouton "Suivant"
         document.getElementById('prestataireBtn').addEventListener('click', function () {
-            // Récupérez les valeurs des checkboxes
-            var prestataire = "PRE";
-            console.log(prestataire);
+            
+            //document.getElementById('role').value = 'PRE';
+            //var prestataire = "PRE";
+            //console.log(prestataire);
             document.getElementById('prestataireForm').style.display = 'grid';
             document.getElementById('typeUserBtn').style.display = 'none';
             document.getElementById('title_form').innerText= 'Etape 1/3 : Prestataire';
@@ -64,22 +67,24 @@
         
         document.getElementById('internauteBtn').addEventListener('click', function () {
             // Récupérez les valeurs des checkboxes
-            var internaute = "INT" ;
-            console.log(internaute);
+            document.getElementById('role').value = 'INT';
+            //var internaute = "INT" ;
+            //console.log(internaute);
             document.getElementById('internauteForm').style.display = 'grid';
             document.getElementById('typeUserBtn').style.display = 'none';
             document.getElementById('title_form').innerText= 'Formulaire Internaute';
             document.getElementById('P_Bar').style.display='flex';
             document.getElementById('Pro_Bar').style.width = '70%';
+
+            document.getElementById('submit').style.display ='block';
         });
 
        
-           
+          
         document.getElementById('submitInternauteForm').addEventListener('click', function(){
+            var newsletter = 'off';
             if (newsletter_int.checked) {
                 newsletter = 'on';
-            } else {
-                newsletter = 'off';
             };
             
                             
@@ -98,22 +103,20 @@
             document.getElementById('title_form').innerText= 'Inscription terminée ';
             document.getElementById('Pro_Bar').style.width = '100%';
 
-             var data = {'un': 'test'};
+             var datasJSON = JSON.stringify(datas);
 
-             console.log(data); 
-            axios.post('/inscription/json/', data, {hearders : {
-                'Content-Type' : 'json'
-            }})
-
+             axios.post('/inscription/json', datasJSON)
             .then(response => {
-               
-                console.log(response.data);
+                // La réponse du serveur est accessible ici
+                console.log(response);
             })
             .catch(error => {
-                
+                // Gérer les erreurs si nécessaire
                 console.error('Erreur lors de la requête Axios', error);
             });
-            
+
+             console.log(datasJSON); 
+           
 
         });
         document.getElementById('submitprestataireForm').addEventListener('click', function(){
@@ -158,6 +161,8 @@
             document.getElementById('title_form').innerText= 'Etape 3/3 : Promotion ';
             document.getElementById('Pro_Bar').style.width = '99%';
 
+            document.getElementById('submit').style.display ='block';
+
             console.log(datas);
         });
 
@@ -173,18 +178,66 @@
             document.getElementById('Pro_Bar').style.width = '100%';
             console.log(datas);
 
-            axios.post('/inscription/json', datas)
-            .then(response => {
-               
-                console.log(response.data);
-            })
-            .catch(error => {
-                
-                console.error('Erreur lors de la requête Axios', error);
-            });
+           
         });
             
         
     }); 
 
+
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('icone_connexion').style.display='none';  
+
+    document.getElementById('internauteBtn').addEventListener('click', function () {
+        document.getElementById('FormInt').style.display = 'block';
+        document.getElementById('typeUserBtn').style.display = 'none';
+        document.getElementById('title_form').innerText= 'Formulaire Internaute';
+        document.getElementById('P_Bar').style.display='flex';
+        document.getElementById('Pro_Bar').style.width = '70%';
+
+
+        
+    });
+
+    document.getElementById('prestataireBtn').addEventListener('click', function () {
+
+        document.getElementById('FormPre').style.display='block'    
+        document.getElementById('prestataireForm').style.display = 'grid';
+        document.getElementById('typeUserBtn').style.display = 'none';
+        document.getElementById('title_form').innerText= 'Etape 1/3 : Prestataire';
+        document.getElementById('P_Bar').style.display='flex';
+        document.getElementById('Pro_Bar').style.width = '33%';
+       
+    });
+
+    document.getElementById('submitprestataireForm').addEventListener('click', function(){
+        
+        document.getElementById('stageForm').style.display = 'grid';
+        document.getElementById('prestataireForm').style.display = 'none';
+        document.getElementById('title_form').innerText= 'Etape 2/3 : Stage';
+        document.getElementById('Pro_Bar').style.width = '66%';
+
+        
+    });
+
+    document.getElementById('submitStageForm').addEventListener('click', function(){  
+
+        
+        document.getElementById('stageForm').style.display = 'none';
+        document.getElementById('promotionForm').style.display = 'grid';
+        document.getElementById('title_form').innerText= 'Etape 3/3 : Promotion ';
+        document.getElementById('Pro_Bar').style.width = '99%';
+
+        document.getElementById('submit_pre').style.display ='block';
+
+        console.log(datas);
+    });
+
+    
+
+
+
+});
 

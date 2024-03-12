@@ -20,15 +20,69 @@
          <button class="button" id="internauteBtn">Internaute</button>
     </div>
 
-     
+    
     
 </div> 
+<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormPre' style='display:none'>
+    <input type="hidden" id="role" name="role" class="form-control" value='PRE'>
+     <input type="hidden" id="user_id_pre" name="user_id_pre" class="form-control" value='{{id}}'>
+   
+
+     {% include 'block/form_prestataire.twig' %}
+     {% include 'block/form_stage.twig' %}
+     {% include 'block/form_promotion.twig' %}
+
+    <div class="input-group mb-3">
+    <button type="submit" id="submit_pre" style='display:none' >Envoyer</button>
+  </div>  
+
+</form>
 
 
-{% include 'block/form_prestataire.twig' %}
-{% include 'block/form_internaute.twig' %}
-{% include 'block/form_stage.twig' %}
-{% include 'block/form_promotion.twig' %}
+<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormInt' style='display:none'>
+  <input type="hidden" id="role" name="role" class="form-control" value='INT'>
+  <input type="hidden" id="user_id_int" name="user_id_int" class="form-control" value='{{id}}'>
+
+   
+   
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_nom_int">Nom</span>
+      <input type="text" id="nom_int" name="nom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_nom_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_prenom_int">Prénom</span>
+      <input type="text" id="prenom_int" name="prenom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_prenom_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_rue_int">Rue</span>
+      <input type="text" id="rue_int" name="rue" class="form-control" aria-label="Sizing example input" aria-describedby="lb_rue_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_numero_int">Numero</span>
+      <input type="text" id="numero_int" name="numero" class="form-control" aria-label="Sizing example input" aria-describedby="lb_numero_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_code_postal_int">Code postal</span>
+      <input type="text" id="code_postal_int" name="code_postal" class="form-control" aria-label="Sizing example input" aria-describedby="lb_code_postal_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_commune_int">Commune</span>
+      <input type="text" id="commune_int" name="commune" class="form-control" aria-label="Sizing example input" aria-describedby="lb_commune_int" required>
+  </div> 
+  <div class="input-group mb-3">        
+      <input class="form-control" type="file" name"file" id="formFile_int">
+  </div>
+  <div class="input-group mb-3">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" name='newsletter' id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Newsletter</label>
+      </div>
+  </div>
+  <div class="input-group mb-3">
+    <button type="submit" id="submit_int" >Envoyer</button>
+  </div>      
+</form>
+
 
 
 
@@ -36,7 +90,7 @@
 {% block javascripts %}
   {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   <script src="{{ asset('js/inscription_form.js') }}"></script>
+   <script type="module" src="{{ asset('js/inscription_form.js') }}"></script>
 {% endblock %}
 
 

@@ -146,7 +146,7 @@ h1, h2, h3 {
   }
 }
 .main_homePage {
-  display: grid; /* Utilise le modèle de disposition flexbox */
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
@@ -254,6 +254,77 @@ h1, h2, h3 {
   grid-column: 2/3;
   grid-row: 2;
   margin-left: 47rem;
+  position: relative;
+}
+
+.card_serviceEnAvant {
+  width: 18rem;
+}
+
+.card_serviceEnAvant:hover .serviceEnAvant-body {
+  visibility: visible;
+  opacity: 1;
+}
+
+.serviceEnAvant-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-81%, -103%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.container_prestataire_recent {
+  grid-column: 2/3;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.3rem;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.container_typeUserBtn {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 1rem;
+  text-align: center;
+}
+.container_typeUserBtn button {
+  font-size: 2rem;
+}
+
+.container_prestataireBtn {
+  grid-column: 1;
+  margin: 1rem;
+}
+
+.container_internauteBtn {
+  margin: 1rem;
+}
+
+.prestataireForm, .stageForm, .promotionForm {
+  display: "none";
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#P_Bar {
+  display: none;
+}
+
+#Pro_Bar {
+  background-color: #87d02a;
+}
+
+.input-group {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.internauteForm:last-child button {
+  padding: 1rem 2rem;
 }
 
 /*# sourceMappingURL=screen.cs.map */
