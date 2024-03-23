@@ -38,20 +38,18 @@ class PrestataireRepository extends ServiceEntityRepository
         return $query->getResult();
     }*/
 
-//    /**
-//     * @return Prestataire[] Returns an array of Prestataire objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return [] Returns an array of Prestataire Names
+    */
+   public function findByAllNames($value): array
+    {
+       return $this->createQueryBuilder('p')
+            ->andWhere('p.nom LIKE :val')
+            ->setParameter('val', '%'. $value . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Prestataire
 //    {

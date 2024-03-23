@@ -15,7 +15,7 @@ class CategorieDeServicesController extends AbstractController
     public function index($id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $repository = $entityManager->getRepository(CategorieDeServices::class);
-        $service =$repository->findOneBy(['id' => $id ]);
+        $service = $repository->findOneBy(['id' => $id ]);
         $categorieDeServices =$repository->findAll();
         
         return $this->render('categorie_de_services/index.html.twig', [

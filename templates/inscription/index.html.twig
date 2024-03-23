@@ -39,7 +39,7 @@
 </form>
 
 
-<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormInt' style='display:none'>
+<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormInt' enctype="multipart/form-data" style='display:none'>
   <input type="hidden" id="role" name="role" class="form-control" value='INT'>
   <input type="hidden" id="user_id_int" name="user_id_int" class="form-control" value='{{id}}'>
 
@@ -69,9 +69,10 @@
       <span class="input-group-text" id="lb_commune_int">Commune</span>
       <input type="text" id="commune_int" name="commune" class="form-control" aria-label="Sizing example input" aria-describedby="lb_commune_int" required>
   </div> 
-  <div class="input-group mb-3">        
-      <input class="form-control" type="file" name"file" id="formFile_int">
-  </div>
+  <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupFile01">Upload</label>
+        <input type="file" name="file" class="formFile_int" id="inputGroupFile01">
+    </div>
   <div class="input-group mb-3">
       <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" role="switch" name='newsletter' id="flexSwitchCheckDefault">

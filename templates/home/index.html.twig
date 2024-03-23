@@ -35,17 +35,19 @@
             </div>
          </div>  
       </div>
-      {% for prestataire in prestataires %}
       <div class="container_prestataire_recent">
+      {% for prestataire in prestataires %}
+      
          <div class ="card_prestataire_recent card" style="width: 18rem;">
-            <img src="..." class="img_prestataire_recent card-img-top" alt="...">
+            <img src="#" class="img_prestataire_recent card-img-top" alt="">
             <div class="card-body">
                <h5 class="card-title">{{prestataire.prestataire.nom}}</h5>
-               <a href="{{path('app_categorie_de_services', {'id': prestataire.prestataire.id})}}" class="button">Plus de détails</a>
+               <a href="{{path('app_prestataire', {'id': prestataire.id})}}" class="button">Plus de détails</a>
             </div>
          </div>
-      </div>
-      {% endfor %}        
+      
+      {% endfor %}  
+      </div>      
       </div>
    </div>    
 </div>

@@ -60,6 +60,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?VilleCodePost $VilleCodePost = null;
+
     public function __construct()
     {
         $this->inscription = new \DateTime(); 
@@ -254,6 +257,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getVilleCodePost(): ?VilleCodePost
+    {
+        return $this->VilleCodePost;
+    }
+
+    public function setVilleCodePost(?VilleCodePost $VilleCodePost): static
+    {
+        $this->VilleCodePost = $VilleCodePost;
 
         return $this;
     }

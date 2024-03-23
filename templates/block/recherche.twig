@@ -1,39 +1,21 @@
-<div class="container containerSearch_form ">
-              
-          {{ form_start(form,  {'attr': {'class': 'row formSearch'}}) }}
-            <div class=" formPrestaire formInput">
-              {{ form_row(form.prestataire) }}
-            </div>
-            <div class=" formInput formRegion">
-              <select id="choix" name="choix" >
-                  <option value="option1">Région </option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
-                  <!-- Ajoutez autant d'options que nécessaire -->
-              </select>
-
-              {#{{ form_row(form.region, {'attr': {'class': 'select_region', 'id':'region'}}) }}#}
-            </div>
-            <div class=" formInput formVille">
-              <select id="choix" name="choix" >
-                  <option value="option1">ville</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
-                  <!-- Ajoutez autant d'options que nécessaire -->
-              </select>
-              {#{{ form_row(form.ville, {'attr': {'class': 'select_ville'}}) }}#}
-            </div>
-            <div class="formInput formCp"> 
-              <select id="choix" name="choix">
-                <option value="option1">Code Postal</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <!-- Ajoutez autant d'options que nécessaire -->
-              </select> 
-              {#{{ form_row(form.codePostal, {'attr': {'class': 'select_codePostal'}}) }}#} 
-            </div>
-            <div class=" formInput formSubmit">
-              <button type="submit" class="button">Recherche</button>     
-            </div>        
-          {{ form_end(form) }}      
+<div class="container containerSearch_form">
+    <div class="row">
+        <div class="col-md-12 mt-3 formInput text-center">
+            <select id="select_prestataire" name="select_prestataire" class="form-select select_prestataire">               
+            </select>
+        </div>
+        <div class="col-md-12 mt-3 formInput text-center">
+            <select id="select_categorieDeServices" name="select_categorieDeServices" class="form-select select_categorieDeServices">
+               
+            </select>
+        </div>
+        <div class="col-md-12 mt-3 formInput text-center">
+            <select id="select_ville_CP_region" name="select_ville_CP_region" class="form-select select_ville_CP_region">
+                
+            </select>
+        </div>
+        <div class="col-md-4 formInput formSubmit">
+            <button type="button" class="button" id="btn_FormSearch">Recherche</button>
+        </div>
     </div>
+</div>

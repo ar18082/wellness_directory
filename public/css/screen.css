@@ -250,6 +250,11 @@ h1, h2, h3 {
   margin-top: 5rem;
 }
 
+.select2-container--open .select2-dropdown {
+  left: 135px;
+  top: 13px;
+}
+
 .container_serviceEnAvant {
   grid-column: 2/3;
   grid-row: 2;
@@ -305,8 +310,8 @@ h1, h2, h3 {
   margin: 1rem;
 }
 
-.internauteForm, .prestataireForm, .stageForm, .promotionForm {
-  display: none;
+.prestataireForm, .stageForm, .promotionForm {
+  display: "none";
   grid-template-columns: repeat(2, 1fr);
 }
 

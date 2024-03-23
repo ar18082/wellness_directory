@@ -45,7 +45,7 @@ class HomeController extends AbstractController
         dans prestataire repository créer une requete custom avec un joinleft d'utilisateur */
         $repository = $entityManager->getRepository(Utilisateur::class);
         $prestataires = $repository->FindPrestaRecent();
-        
+        //dd($prestataires);
         //dd($prestataires[0]->getPrestataire()->getNom());
 
        

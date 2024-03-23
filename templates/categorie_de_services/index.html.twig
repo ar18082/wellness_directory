@@ -1,32 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{controller_name}}{% endblock %}
+{% block title %}{{ controller_name }}{% endblock %}
 
 {% block body %}
 
-<h1> Catégorie de services : {{service.nom}}</h1>
-{#
-fiche présentation prestataire repris dans la catégorie de service sélectionner 
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+<div class="container_main">
+   <div class="main_homePage">
+      <div class="container_slider">
+            {#
+                intégrer des images et les faire défiler faire une boucle pour afficher les images
+            #}
+            <div class="container_slider_img">
+                <img src="{{asset('img/slider-1.jpg')}}" class="slider_img" alt="...">
+            </div>
+        </div>
+        <div class="container_categorieDeServices" id="sidebar">
+            <h2>Categories de services</h2>
+            <ul class="categorieDeServices_list">
+                {% for service in categorieDeServices %}
+                {% if service.valide %}
+                    <li class='button'><a href="{{path('app_categorie_de_services', {'id': service.id})}}">{{ service.nom }}</a></li>
+                {% endif %}
+                {% endfor %}           
+            </ul>
+        </div>
+        <div class="col-lg-12 text-center row">
+            <!-- Description de la catégorie -->
+            <h1 class="text-center col-lg-6">{{ service.nom }}</h1>
+            <p class='col-lg-12'>{{ service.description }}</p>
+            <!-- Pagination des prestataires dans la catégorie -->
+                
+        </div>
+        
+      
+      
+   </div>    
 </div>
-#}
-
-{#
-pour le présentation de la catégorie : 
-
-    un slider avec des images de la catégorie 
-    la sidebar des autres catégories  
-    nom de la catégorie en h1 centrer 
-    description de de la catég 
-    pagination des prestataires repris dans la categ 
-
-
-#}
 
 {% endblock %}
+ 

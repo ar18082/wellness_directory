@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ utilisateur.prestataire.nom }}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="main_homePage row">
+        <div class="container_slider">
+            {#
+                intégrer des images et les faire défiler faire une boucle pour afficher les images
+            #}
+            <div class="container_slider_img">
+                <img src="{{asset('img/slider-1.jpg')}}" class="slider_img" alt="...">
+            </div>
+        </div>
+        <div class="container_categorieDeServices" id="sidebar">
+            <h2>Categories de services</h2>
+            <ul class="categorieDeServices_list">
+                {% for service in categorieDeServices %}
+                {% if service.valide %}
+                    <li class='button'><a href="{{path('app_categorie_de_services', {'id': service.id})}}">{{ service.nom }}</a></li>
+                {% endif %}
+                {% endfor %}           
+            </ul>
+        </div>
+        <div class="col-lg-12" style='margin: 1rem auto'>
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ utilisateur.prestataire.nom}}</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p>Adresse: {{ utilisateur.AdresseRue }}, {{utilisateur.AdresseNumber}}</p>
+                    
+                    </li>
+                    <li class="list-group-item">
+                        <p>Téléphone: {{ utilisateur.prestataire.numTel }}</p>
+            
+                    </li>
+                    <li class="list-group-item">
+                        <p>E-mail: {{ utilisateur.email }}</p>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}

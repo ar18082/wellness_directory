@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-//use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Faker\Factory as FakerFactory;
 
 use App\Entity\Stage;
 use App\Entity\Promotion;
 use App\Entity\Internaute;
+use App\Entity\Images;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -31,6 +33,8 @@ class InscriptionController extends AbstractController
 
         $id = $_GET['id'];
 
+       
+
         
      
         
@@ -47,7 +51,33 @@ class InscriptionController extends AbstractController
     public function inscValid(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
 
+       
+
         $role = $request->request->get('role');
+        $fichier = $request->files->get('file');
+        if ($fichier instanceof UploadedFile) {
+            
+            $extension = $fichier->getClientOriginalExtension();
+            $mime = $fichier->getClientMimeType();
+            $nomFichier = uniqid().'.'.$extension;
+
+            // Déplacer le fichier vers l'emplacement souhaité
+            if($role == 'INT'){
+                $chemin = 'internautes';
+            }elseif($role=='PRE'){
+                $chemin = 'prestataires';
+                
+            }
+            $destination = $this->getParameter('kernel.project_dir') . '/public/img/'.$chemin ;
+           
+            // Générer un nom de fichier unique
+            $fichier->move($destination, $nomFichier);
+
+            
+
+
+           
+        } 
     
         if($role == 'INT'){
             $utilisateurId = $request->request->get('user_id_int');
@@ -75,8 +105,14 @@ class InscriptionController extends AbstractController
             $entityManager->persist($prestataire);
             $entityManager->flush();
 
+            
+
+            
+
 
         }
+        $image = new Images();
+        $image->setImage('img/'.$chemin.$nomFichier);
 
         $repository = $entityManager->getRepository(Utilisateur::class);
         $utilisateur = $repository->find($utilisateurId);
@@ -88,17 +124,44 @@ class InscriptionController extends AbstractController
         $inter_Id = $internaute->getId();
         $internaute = $entityManager->find(Internaute::class, $inter_Id);
         $utilisateur->setInternaute($internaute);
+        $image->setInternaute($internaute);
     
         }else{
         $presta_Id = $prestataire->getId();
         $prestataire = $entityManager->find(Prestataire::class, $presta_Id);
         $utilisateur->setPrestataire($prestataire);
+        $image->setPrestataire($prestataire);
+
+            if($request->request->get('nom_stg')){
+                $stage = new Stage();
+                $stage->setNom($request->request->get('nom_stg'));
+                $stage->setDescription($request->request->get('description_stg'));
+                $stage->setTarif($request->request->get('tarif_stg'));
+                $stage->setDebut($request->request->get('dateIn_stg'));
+                $stage->setFin($request->request->get('dateOut_stg'));
+                $stage->setAffichageDe($request->request->get('affichageIn_stg')); 
+                $stage->setAffichageJusque($request->request->get('affichageOut_stg'));
+                $stage->setPrestataire($prestataire);
+            }
+
+            if($request->request->get('nom_promo')){
+                $promo = new Promotion();
+                $promo->setNom($request->request->get('nom_promo'));
+                $stage->setDescription($request->request->get('description_promo'));
+                $stage->setDebut($request->request->get('dateIn_promo'));
+                $stage->setFin($request->request->get('dateOut_promo'));
+                $stage->setPrestataire($prestataire);
+                // ajouter document pdf, date affichage, catégorie de service 
+
+            }
         
         }
         $entityManager->persist($utilisateur);
         $entityManager->flush();
 
-    
+       
+        $entityManager->persist($image);
+        $entityManager->flush();
                         
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
