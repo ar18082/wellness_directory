@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+
+{% block body %}
+
+
+<h1 id="title_form">Quel type d'utilisateur êtes vous ? </h1>
+
+
+<div class="progress" id="P_Bar">
+  <div class="progress-bar" id="Pro_Bar" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<div class="container_typeUserBtn "   id="typeUserBtn">
+    <div class="container_prestataireBtn ">
+         <button class="button" id="prestataireBtn">Prestataire</button>
+    </div>
+    <div class="container_internauteBtn ">
+         <button class="button" id="internauteBtn">Internaute</button>
+    </div>
+
+    
+    
+</div> 
+<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormPre' enctype="multipart/form-data" style='display:none'>
+    <input type="hidden" id="role" name="role" class="form-control" value='PRE'>
+     <input type="hidden" id="user_id_pre" name="user_id_pre" class="form-control" value='{{id}}'>
+   
+
+     {% include 'block/form_prestataire.twig' %}
+     {% include 'block/form_stage.twig' %}
+     {% include 'block/form_promotion.twig' %}
+
+    <div class="input-group mb-3">
+    <button type="submit" id="submit_pre" style='display:none' >Envoyer</button>
+  </div>  
+
+</form>
+
+
+<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormInt' enctype="multipart/form-data" style='display:none'>
+  <input type="hidden" id="role" name="role" class="form-control" value='INT'>
+  <input type="hidden" id="user_id_int" name="user_id_int" class="form-control" value='{{id}}'>
+
+   
+   
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_nom_int">Nom</span>
+      <input type="text" id="nom_int" name="nom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_nom_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_prenom_int">Prénom</span>
+      <input type="text" id="prenom_int" name="prenom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_prenom_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_rue_int">Rue</span>
+      <input type="text" id="rue_int" name="rue" class="form-control" aria-label="Sizing example input" aria-describedby="lb_rue_int" required>
+  </div>
+  <div class="input-group mb-3">
+      <span class="input-group-text" id="lb_numero_int">Numero</span>
+      <input type="text" id="numero_int" name="numero" class="form-control" aria-label="Sizing example input" aria-describedby="lb_numero_int" required>
+  </div>
+  
+  <div class="input-group mb-3">
+        <span class="input-group-text" id="code_postal_int">Code postal Commune</span>
+        
+         <select id="code_postal_int" name="code_postal" class="form-select select_ville_CP_region">
+                
+        </select>
+    </div>
+  <div class="input-group mb-3">
+    <label class="input-group-text" for="inputGroupFileInt">Upload</label>
+    <input type="file" name="file_int" class="formFile_int" id="inputGroupFileInt">
+  </div>
+  <div class="input-group mb-3">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" name='newsletter' id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Newsletter</label>
+      </div>
+  </div>
+  <div class="input-group mb-3">
+    <button type="submit" id="submit_int" >Envoyer</button>
+  </div>      
+</form>
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script type="module" src="{{ asset('js/inscription_form.js') }}"></script>
+{% endblock %}
+
+
+
+
+

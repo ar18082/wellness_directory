@@ -10,6 +10,10 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        
+    App\Twig\Base64Extension:
+        tags: ['twig.extension']
+
  
     App\Service\DateService:
         autowire: true

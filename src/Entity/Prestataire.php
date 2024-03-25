@@ -263,6 +263,8 @@ class Prestataire
 
     /**
      * @return Collection<int, CategorieDeServices>
+     * @ORM\ManyToMany(targetEntity="App\Entity\CategorieDeServices", inversedBy="prestataires")
+     * @ORM\JoinTable(name="prestataire_categorie_de_services")
      */
     public function getCategorieDeServices(): Collection
     {

@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\CategorieDeServices;
+use App\Entity\Images;
 use App\Entity\Prestataire;
+use App\Entity\Utilisateur;
 use App\Form\RechercheType;
+use App\Service\PrestataireRecent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,27 +28,47 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
         
+        $repositoryImage = $entityManager->getRepository(Images::class);
         //récupération des catégories de services 
-        /* 
-            attention introduire un if valide == true
-        */
         $repository = $entityManager->getRepository(CategorieDeServices::class);
-        $categorieDeServices = $repository->findAll();
-        // choix d'un service mis en avant pour une durée d'un mois (choix du 1er du mois -> au dernier jour du mois !!! 30,31 ou 28!!!!!)
-        $serviceDuMois = $repository->findOneBy(['id' => 1 ]);
+        $categorieDeServices = $repository->findBy(['Valide' => true]);
+
+        // choix à faire dans le dashboard de l'admin
+        // service du mois mis à l'honneur + image 
+        $serviceDuMois = $repository->findOneBy(['EnAvant' => 1 ]);
+        $image_serviceDuMois = $repositoryImage->findOneBy(['categorieDeServices'=> $serviceDuMois->getId()]);
+        
+        
+        // récupération des prestataires les plus récent + images
+        $repository = $entityManager->getRepository(Utilisateur::class);
+        $utilisateurs = $repository->FindPrestaRecent();
+        $images = [];
+        foreach ($utilisateurs as $utilisateur) {
+            $images[]= $repositoryImage->findOneBy(['prestataire' => $utilisateur->getPrestataire()->getId()]);
+        }
 
        
-        // récupération des prestataires
-        $repository = $entityManager->getRepository(Prestataire::class);
-        $prestataires = $repository->findAll();
-        // récupération des 4 prestataires récement inscrit 
+
+        $sliders= $repositoryImage->findBy([
+            'prestataire' => null,
+            'categorieDeServices' => NULL,
+            'internaute' => null, 
+        ]);
+
+    
+      
+        //dd($sliders);
        
 
         return $this->render('home/index.html.twig', [
             'title' => 'Page d\'acceuil',
             'form' =>$form ->createView(),
-            'categorieDeServices' => $categorieDeServices,
-            'serviceDuMois' => $serviceDuMois
+            'categorieDeServices' => $categorieDeServices, // toutes les catégories de service present dans la sidebar
+            'serviceDuMois' => $serviceDuMois, // services mis en avant pour 1 mois
+            'utilisateurs' => $utilisateurs,// 4 derniers prestataires inscrit
+            'images' => $images,
+            'image_serviceDuMois' =>$image_serviceDuMois,
+            'sliders' => $sliders
 
         ]);
     }

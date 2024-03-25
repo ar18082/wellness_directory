@@ -39,6 +39,34 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->getEntityManager()->flush();
     }
 
+    public function FindPrestaRecent(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.prestataire', 'p') 
+            ->where('p.nom IS NOT NULL')
+            ->orderBy('u.inscription', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /*public function FindPrestaRecent2(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery('
+            SELECT u
+            FROM App\Entity\Utilisateur u
+            LEFT JOIN u.prestataire p
+            WHERE u.inscription IS NOT NULL
+            ORDER BY u.inscription DESC
+        ');
+
+        $query->setMaxResults(4);
+
+        return $query->getResult();
+    }*/
+
 //    /**
 //     * @return Utilisateur[] Returns an array of Utilisateur objects
 //     */

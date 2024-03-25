@@ -11,16 +11,16 @@
                 <nav class='h-nav'>
                     <ul class="h-nav-ul">
                         <li class='btn'><a href="{{path('app_home')}}">Home</a></li>
-                        <li class='btn'><a href="#">A propos</a></li>
-                        <li class='btn'><a href="#">Partenaire</a></li>
-                        <li class='btn'><a href="#">Par région</a></li>
-                        <li class='btn'><a href="#">Stages</a></li>
-                        <li class='btn'><a href="#">Contact</a></li>
+                        <li class='btn'><a href="{{path('app_dev')}}">A propos</a></li>
+                        <li class='btn'><a href="{{path('app_dev')}}">Partenaire</a></li>
+                        <li class='btn'><a href="{{path('app_dev')}}">Par région</a></li>
+                        <li class='btn'><a href="{{path('app_dev')}}">Stages</a></li>
+                        <li class='btn'><a href="{{path('app_dev')}}">Contact</a></li>
                     </ul>
                 </nav>
             </div>
         </div>              
-        <div class="dropdown icon_login">
+        <div class="dropdown icon_login" id="icone_connexion">
             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -29,13 +29,13 @@
             </button>
             <ul class="dropdown-menu"> 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <li><a class="dropdown-item" href="#">déconnexion</a></li>
+            <li><a class="dropdown-item" href="{{path('app_logout')}}">déconnexion</a></li>
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
-            <li><a class="dropdown-item" href="#">Connexion</a></li>
+            <li><a class="dropdown-item" href="{{path('app_login')}}">Connexion</a></li>
             {% endif %}                   
                 
-                <li><a class="dropdown-item" href="#">Créer un compte</a></li>
+                <li><a class="dropdown-item" href="{{path('register')}}">Créer un compte</a></li>
             </ul>
         </div>          
     </div>

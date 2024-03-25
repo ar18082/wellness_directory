@@ -1,0 +1,51 @@
+<div class="prestataireForm" id='prestataireForm'>  
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_nom_pre">Nom</span>
+        <input type="text" id="nom_pre" name="nom_pre" class="form-control" aria-label="Sizing example input" aria-describedby="lb_nom_pre" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_tva_pre">tva</span>
+        <input type="text" id="tva_pre" name="tva" class="form-control" aria-label="Sizing example input" aria-describedby="lb_nom_pre" >
+    </div>
+    <div class="input-group mb-3">
+        <label for="categorie-services">Catégorie de services :</label><br>
+        <select id="categorie-services" name="options[]" multiple>
+        {% for service in categorieDeServices %}
+            <option value="{{service.id}}">{{service.nom}}</option>
+         {% endfor %}   
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_telephone_pre">téléphone</span>
+        <input type="text" id="telephone_pre" name="telephone" class="form-control" aria-label="Sizing example input" aria-describedby="lb_telephone_pre" >
+    </div>
+    <div class="input-group mb-3">
+         <label class="input-group-text" for="inputGroupFile01">ajouter une image</label>
+        <input type="file" name="file_pre" class="formFile_pre" id="inputGroupFile01">
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_rue_pre">Rue</span>
+        <input type="text" id="rue_pre" name="rue" class="form-control" aria-label="Sizing example input" aria-describedby="lb_rue_pre" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_numero_pre">Numéro</span>
+        <input type="text" id="numero_pre" name="numero" class="form-control" aria-label="Sizing example input" aria-describedby="lb_numero_pre" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_code_postal_pre">Code postal Commune</span>
+        
+         <select id="code_postal_pre" name="cp" class="form-select select_ville_CP_region">
+                
+        </select>
+    </div>
+   
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="lb_site_internet_pre">Site internet</span>
+        <input type="text" id="site_internet_pre" name="Site_internet" class="form-control" aria-label="Sizing example input" aria-describedby="lb_site_internet_pre" >
+    </div>    
+    <div class="input-group mb-3">
+        <button type="button" id="submitprestataireForm">suivant </button>
+    </div>
+</div>

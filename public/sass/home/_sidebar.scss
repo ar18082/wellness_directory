@@ -1,5 +1,5 @@
-.main_homePage {
-    display: grid; /* Utilise le modèle de disposition flexbox */
+.main {
+    display: grid; 
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);

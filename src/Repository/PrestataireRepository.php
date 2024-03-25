@@ -20,21 +20,46 @@ class PrestataireRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Prestataire::class);
     }
+   /* public function FindPrestaRecent2(): array
+    {
+        $entityManager = $this->getEntityManager();
 
-//    /**
-//     * @return Prestataire[] Returns an array of Prestataire objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        $query = $entityManager->createQuery('
+            SELECT u
+            FROM App\Entity\Utilisateur u
+            LEFT JOIN u.prestataire p
+            WHERE u.inscription IS NOT NULL
+            ORDER BY u.inscription DESC
+            
+        ');
+
+        $query->setMaxResults(4);
+
+        return $query->getResult();
+    }*/
+
+    public function findByCategorieDeServicesId(int $categorieDeServicesId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.CategorieDeServices', 'c')
+            ->andWhere('c.id = :categorieDeServicesId')
+            ->setParameter('categorieDeServicesId', $categorieDeServicesId)
+            ->getQuery()
+            ->getResult();
+    
+    }
+    /**
+     * @return [] Returns an array of Prestataire Names
+    */
+   public function findByAllNames($value): array
+    {
+       return $this->createQueryBuilder('p')
+            ->andWhere('p.nom LIKE :val')
+            ->setParameter('val', '%'. $value . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Prestataire
 //    {
