@@ -4,14 +4,14 @@
 
 {% block body %}
  <div class="container_main">
-   <div class="main_homePage">
+   <div class="main">
       <div class="container_slider">
-         {#
-            intégrer des images et les faire défiler faire une boucle pour afficher les images
-         #}
+         {% for slider in sliders %}
          <div class="container_slider_img">
-            <img src="{{asset('img/slider-1.jpg')}}" class="slider_img" alt="...">
+            <img src="{{asset(slider.image)}}" class="slider_img" alt="test">
          </div>
+         {% endfor %}     
+        
       </div>
       <div class="container_categorieDeServices" id="sidebar">
          <h2>Categories de services</h2>
@@ -28,21 +28,26 @@
       </div>
       <div class = "container_serviceEnAvant">
          <div class="card_serviceEnAvant " >
-            <img src="{{asset('img/services-aides-a-domicile.png')}}" class="card-img-top" alt="...">
+            <img src="{{asset(image_serviceDuMois.image)}}" class="card-img-top" alt="{{image_serviceDuMois.id}}">
             <div class=" serviceEnAvant-body">               
                <h5 class="card-title">{{serviceDuMois.nom}}</h5>
                <a href="{{path('app_categorie_de_services', {'id': serviceDuMois.id})}}" class="button"><button class="button">Plus de détails</button></a>
             </div>
          </div>  
       </div>
+        
       <div class="container_prestataire_recent">
-      {% for prestataire in prestataires %}
+      {% for utilisateur in utilisateurs %}
       
          <div class ="card_prestataire_recent card" style="width: 18rem;">
-            <img src="#" class="img_prestataire_recent card-img-top" alt="">
+        {% for image in images %}
+            {% if image is not null and image.prestataire.id == utilisateur.prestataire.id %}
+               <img src="{{asset(image.image)}}" class="img_prestataire_recent card-img-top" alt="{{ image.prestataire.id }}">
+            {% endif %}
+         {% endfor %}
             <div class="card-body">
-               <h5 class="card-title">{{prestataire.prestataire.nom}}</h5>
-               <a href="{{path('app_prestataire', {'id': prestataire.id})}}" class="button">Plus de détails</a>
+               <h5 class="card-title">{{utilisateur.prestataire.nom}}</h5>
+               <a href="{{path('app_prestataire', {'id': utilisateur.id})}}" class="button">Plus de détails</a>
             </div>
          </div>
       

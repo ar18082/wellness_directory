@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ controller_name }}{% endblock %}
+{% block title %}{{ categ.nom }}{% endblock %}
 
 {% block body %}
 
 <div class="container_main">
-   <div class="main_homePage">
-      <div class="container_slider">
-            {#
-                intégrer des images et les faire défiler faire une boucle pour afficher les images
-            #}
-            <div class="container_slider_img">
-                <img src="{{asset('img/slider-1.jpg')}}" class="slider_img" alt="...">
-            </div>
+    <div class="main">
+        <div class="container_slider">
+         {% for slider in sliders %}
+         <div class="container_slider_img">
+            <img src="{{asset(slider.image)}}" class="slider_img" alt="test">
+         </div>
+         {% endfor %}     
+        
         </div>
         <div class="container_categorieDeServices" id="sidebar">
             <h2>Categories de services</h2>
@@ -24,18 +24,42 @@
                 {% endfor %}           
             </ul>
         </div>
-        <div class="col-lg-12 text-center row">
-            <!-- Description de la catégorie -->
-            <h1 class="text-center col-lg-6">{{ service.nom }}</h1>
-            <p class='col-lg-12'>{{ service.description }}</p>
-            <!-- Pagination des prestataires dans la catégorie -->
-                
+        <div class="container_recherche">
+         {% include 'block/recherche.twig' %}
         </div>
-        
-      
-      
-   </div>    
+        <div class="container_card_categorieDeServices">
+            <div class="card" >
+                <img src="{{asset(image.image)}}" class="card-img-top" alt="{{image.id}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ categ.nom}}</h5>
+                    <p class="card-text">{{ categ.description}}</p>
+                </div>
+               
+            </div> 
+        </div>
+        <div class="container_prestataires">
+            <div class="row">
+                {% for prestataire in prestataires %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            {% for image in images %}
+                                {% if image is not null and image.prestataire.id == prestataire.id %}
+                                    <img src="{{asset(image.image)}}" class="card-img-top" alt="{{ image.prestataire.id }}">
+                                {% endif %}
+                            {% endfor %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ prestataire.nom }}</h5>
+                                <p class="card-text">Site Internet: {{ prestataire.siteInternet }}</p>
+                                <p class="card-text">Numéro de téléphone: {{ prestataire.numTel }}</p>
+                                <p class="card-text">Numéro de TVA: {{ prestataire.numTva }}</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
- 

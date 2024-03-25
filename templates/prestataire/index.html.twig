@@ -4,16 +4,16 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="main_homePage row">
+<div class="container_main">
+    <div class="main">
         <div class="container_slider">
-            {#
-                intégrer des images et les faire défiler faire une boucle pour afficher les images
-            #}
-            <div class="container_slider_img">
-                <img src="{{asset('img/slider-1.jpg')}}" class="slider_img" alt="...">
-            </div>
-        </div>
+         {% for slider in sliders %}
+         <div class="container_slider_img">
+            <img src="{{asset(slider.image)}}" class="slider_img" alt="test">
+         </div>
+         {% endfor %}     
+        
+      </div>
         <div class="container_categorieDeServices" id="sidebar">
             <h2>Categories de services</h2>
             <ul class="categorieDeServices_list">
@@ -24,9 +24,12 @@
                 {% endfor %}           
             </ul>
         </div>
-        <div class="col-lg-12" style='margin: 1rem auto'>
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+        <div class="container_recherche">
+         {% include 'block/recherche.twig' %}
+        </div>
+        <div class="container_card">
+            <div class="card" >
+                <img src="{{asset(image.image)}}" class="card-img-top" alt="{{image.id}}">
                 <div class="card-body">
                     <h5 class="card-title">{{ utilisateur.prestataire.nom}}</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

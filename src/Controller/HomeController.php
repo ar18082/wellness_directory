@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CategorieDeServices;
+use App\Entity\Images;
 use App\Entity\Prestataire;
 use App\Entity\Utilisateur;
 use App\Form\RechercheType;
@@ -27,29 +28,36 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
         
+        $repositoryImage = $entityManager->getRepository(Images::class);
         //récupération des catégories de services 
-        /* 
-            attention introduire un if valide == true
-        */
         $repository = $entityManager->getRepository(CategorieDeServices::class);
-        $categorieDeServices = $repository->findAll();
-
+        $categorieDeServices = $repository->findBy(['Valide' => true]);
 
         // choix à faire dans le dashboard de l'admin
-        // service du mois mis à l'honneur 
+        // service du mois mis à l'honneur + image 
         $serviceDuMois = $repository->findOneBy(['EnAvant' => 1 ]);
+        $image_serviceDuMois = $repositoryImage->findOneBy(['categorieDeServices'=> $serviceDuMois->getId()]);
         
-       
-        // récupération des prestataires
-        /*
-        dans prestataire repository créer une requete custom avec un joinleft d'utilisateur */
+        
+        // récupération des prestataires les plus récent + images
         $repository = $entityManager->getRepository(Utilisateur::class);
-        $prestataires = $repository->FindPrestaRecent();
-        //dd($prestataires);
-        //dd($prestataires[0]->getPrestataire()->getNom());
+        $utilisateurs = $repository->FindPrestaRecent();
+        $images = [];
+        foreach ($utilisateurs as $utilisateur) {
+            $images[]= $repositoryImage->findOneBy(['prestataire' => $utilisateur->getPrestataire()->getId()]);
+        }
 
        
-        
+
+        $sliders= $repositoryImage->findBy([
+            'prestataire' => null,
+            'categorieDeServices' => NULL,
+            'internaute' => null, 
+        ]);
+
+    
+      
+        //dd($sliders);
        
 
         return $this->render('home/index.html.twig', [
@@ -57,7 +65,10 @@ class HomeController extends AbstractController
             'form' =>$form ->createView(),
             'categorieDeServices' => $categorieDeServices, // toutes les catégories de service present dans la sidebar
             'serviceDuMois' => $serviceDuMois, // services mis en avant pour 1 mois
-            'prestataires' => $prestataires // 4 derniers prestataires inscrit
+            'utilisateurs' => $utilisateurs,// 4 derniers prestataires inscrit
+            'images' => $images,
+            'image_serviceDuMois' =>$image_serviceDuMois,
+            'sliders' => $sliders
 
         ]);
     }

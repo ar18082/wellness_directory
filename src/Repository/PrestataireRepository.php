@@ -38,6 +38,16 @@ class PrestataireRepository extends ServiceEntityRepository
         return $query->getResult();
     }*/
 
+    public function findByCategorieDeServicesId(int $categorieDeServicesId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.CategorieDeServices', 'c')
+            ->andWhere('c.id = :categorieDeServicesId')
+            ->setParameter('categorieDeServicesId', $categorieDeServicesId)
+            ->getQuery()
+            ->getResult();
+    
+    }
     /**
      * @return [] Returns an array of Prestataire Names
     */

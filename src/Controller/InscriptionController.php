@@ -22,6 +22,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 use App\Entity\CategorieDeServices;
 use App\Entity\Prestataire;
 use App\Entity\Utilisateur;
+use App\Entity\VilleCodePost;
+use App\Form\CategServiceType;
 use App\Form\RechercheType;
 use App\Service\PrestataireRecent;
 
@@ -33,6 +35,11 @@ class InscriptionController extends AbstractController
 
         $id = $_GET['id'];
 
+        $repository = $entityManager->getRepository(CategorieDeServices::class);
+        $categorieDeServices = $repository->findBy(['Valide'=>true]);
+
+       // dd($categorieDeServices);
+
        
 
         
@@ -41,6 +48,7 @@ class InscriptionController extends AbstractController
         return $this->render('inscription/index.html.twig', [
             'controller_name' => 'test',
             'id' => $id,
+            'categorieDeServices'=>$categorieDeServices,
             
                            
            
@@ -50,36 +58,13 @@ class InscriptionController extends AbstractController
     #[Route('/inscription/valide', name: 'app_inscription_valide')]
     public function inscValid(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
-
        
-
         $role = $request->request->get('role');
-        $fichier = $request->files->get('file');
-        if ($fichier instanceof UploadedFile) {
-            
-            $extension = $fichier->getClientOriginalExtension();
-            $mime = $fichier->getClientMimeType();
-            $nomFichier = uniqid().'.'.$extension;
+        
 
-            // Déplacer le fichier vers l'emplacement souhaité
-            if($role == 'INT'){
-                $chemin = 'internautes';
-            }elseif($role=='PRE'){
-                $chemin = 'prestataires';
-                
-            }
-            $destination = $this->getParameter('kernel.project_dir') . '/public/img/'.$chemin ;
-           
-            // Générer un nom de fichier unique
-            $fichier->move($destination, $nomFichier);
-
-            
-
-
-           
-        } 
-    
         if($role == 'INT'){
+            $fichier= $request->files->get('file_int');
+            
             $utilisateurId = $request->request->get('user_id_int');
             $internaute = new Internaute();
             $internaute->setNom($request->request->get('nom')) ;
@@ -95,29 +80,59 @@ class InscriptionController extends AbstractController
             $entityManager->flush();
 
         }else{
+            $fichier = $request->files->get('file_pre');
             $utilisateurId = $request->request->get('user_id_pre');
             $prestataire = new Prestataire();
             $prestataire->setNom($request->request->get('nom_pre'));
             $prestataire->setSiteInternet($request->request->get('Site_internet'));
             $prestataire->setNumTel($request->request->get('telephone'));
             $prestataire->setNumTva($request->request->get('tva'));
+            $options = $request->get('options');
+            foreach ($options as $optionId) {
+                $categorieDeService = $entityManager->getRepository(CategorieDeServices::class)->find($optionId);
+                if ($categorieDeService) {
+                    $prestataire->addCategorieDeService($categorieDeService);
+                }
+            }
             
             $entityManager->persist($prestataire);
             $entityManager->flush();
 
-            
-
-            
-
-
         }
-        $image = new Images();
-        $image->setImage('img/'.$chemin.$nomFichier);
+           
+        if ($fichier instanceof UploadedFile) {
+            
+           
+            $originalName = $fichier->getClientOriginalName();
+            $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+           
+            if($role == 'INT'){
+                $type = 'profil';
+               
+            }elseif($role=='PRE'){
+                $type = 'logo';
+               
+                
+            }
+            $nomFichier =$role.'_'. $type .'_'. $utilisateurId.'.'.$extension;
+                       
+            $destination = $this->getParameter('kernel.project_dir') . '/public/img/'.$role ;
 
+                       
+            $fichier->move($destination, $nomFichier);
+
+        } 
+
+       
+        $image = new Images();
+        $image->setImage('img/'.$role.'/'.$nomFichier);
+        $repositoryVilleCP = $entityManager->getRepository(VilleCodePost::class);
+        $villeCP= $repositoryVilleCP->find($request->request->get('code_postal')); 
         $repository = $entityManager->getRepository(Utilisateur::class);
         $utilisateur = $repository->find($utilisateurId);
         $utilisateur->setAdresseNumber($request->request->get('numero'));
         $utilisateur->setAdresseRue($request->request->get('rue'));
+        $utilisateur->setVilleCodePost($villeCP);
         $utilisateur->setRoles([$role]);
 
         if($role == 'INT'){
@@ -163,34 +178,10 @@ class InscriptionController extends AbstractController
         $entityManager->persist($image);
         $entityManager->flush();
                         
-        $form = $this->createForm(RechercheType::class);
-        $form->handleRequest($request);
-
+      
         
-        //récupération des catégories de services 
-        $repository = $entityManager->getRepository(CategorieDeServices::class);
-        $categorieDeServices = $repository->findBy(['Valide' => true]);
+        return $this->redirectToRoute('app_home');
 
-        // choix à faire dans le dashboard de l'admin
-        // service du mois mis à l'honneur 
-        $serviceDuMois = $repository->findOneBy(['EnAvant' => 1 ]);
-
-
-        // récupération des prestataires récent
-        $repository = $entityManager->getRepository(Utilisateur::class);
-        $prestataires = $repository->FindPrestaRecent();
-
-     
-                
-        
-        return $this->render('home/index.html.twig', [
-            'title' => 'Page d\'acceuil',
-            'form' =>$form ->createView(),
-            'categorieDeServices' => $categorieDeServices, // toutes les catégories de service present dans la sidebar
-            'serviceDuMois' => $serviceDuMois, // services mis en avant pour 1 mois
-            'prestataires' => $prestataires // 4 derniers prestataires inscrit
-
-        ]);
     }
 }
     

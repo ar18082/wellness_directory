@@ -17,9 +17,9 @@ class Images
     #[ORM\Column(nullable: true)]
     private ?int $ordre = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $image = null;
-
+    #[ORM\Column(type: 'string', length: 255, nullable: true)] 
+    private ?string $image = null; 
+    
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Internaute $internaute = null;
 

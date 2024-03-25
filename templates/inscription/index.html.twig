@@ -23,7 +23,7 @@
     
     
 </div> 
-<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormPre' style='display:none'>
+<form action="{{ path('app_inscription_valide') }}" method="POST" id='FormPre' enctype="multipart/form-data" style='display:none'>
     <input type="hidden" id="role" name="role" class="form-control" value='PRE'>
      <input type="hidden" id="user_id_pre" name="user_id_pre" class="form-control" value='{{id}}'>
    
@@ -61,18 +61,18 @@
       <span class="input-group-text" id="lb_numero_int">Numero</span>
       <input type="text" id="numero_int" name="numero" class="form-control" aria-label="Sizing example input" aria-describedby="lb_numero_int" required>
   </div>
+  
   <div class="input-group mb-3">
-      <span class="input-group-text" id="lb_code_postal_int">Code postal</span>
-      <input type="text" id="code_postal_int" name="code_postal" class="form-control" aria-label="Sizing example input" aria-describedby="lb_code_postal_int" required>
-  </div>
-  <div class="input-group mb-3">
-      <span class="input-group-text" id="lb_commune_int">Commune</span>
-      <input type="text" id="commune_int" name="commune" class="form-control" aria-label="Sizing example input" aria-describedby="lb_commune_int" required>
-  </div> 
-  <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupFile01">Upload</label>
-        <input type="file" name="file" class="formFile_int" id="inputGroupFile01">
+        <span class="input-group-text" id="code_postal_int">Code postal Commune</span>
+        
+         <select id="code_postal_int" name="code_postal" class="form-select select_ville_CP_region">
+                
+        </select>
     </div>
+  <div class="input-group mb-3">
+    <label class="input-group-text" for="inputGroupFileInt">Upload</label>
+    <input type="file" name="file_int" class="formFile_int" id="inputGroupFileInt">
+  </div>
   <div class="input-group mb-3">
       <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" role="switch" name='newsletter' id="flexSwitchCheckDefault">

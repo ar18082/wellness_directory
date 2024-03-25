@@ -1,21 +1,26 @@
+
+{{ form_start(form) }}
+
 <div class="container containerSearch_form">
     <div class="row">
         <div class="col-md-12 mt-3 formInput text-center">
-            <select id="select_prestataire" name="select_prestataire" class="form-select select_prestataire">               
-            </select>
+            {# Affichez le champ select_prestataire #}
+            {{ form_row(form.select_prestataire) }}
         </div>
         <div class="col-md-12 mt-3 formInput text-center">
-            <select id="select_categorieDeServices" name="select_categorieDeServices" class="form-select select_categorieDeServices">
-               
-            </select>
+            {# Affichez le champ select_categorieDeServices #}
+            {{ form_row(form.select_categorieDeServices) }}
         </div>
         <div class="col-md-12 mt-3 formInput text-center">
-            <select id="select_ville_CP_region" name="select_ville_CP_region" class="form-select select_ville_CP_region">
-                
-            </select>
+            {# Affichez le champ select_ville_CP_region #}
+            {{ form_row(form.select_ville_CP_region) }}
         </div>
         <div class="col-md-4 formInput formSubmit">
-            <button type="button" class="button" id="btn_FormSearch">Recherche</button>
+            
+            {{ form_row(form.submit) }}
         </div>
     </div>
 </div>
+
+
+{{ form_end(form) }}
