@@ -11,7 +11,7 @@
     padding: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Ajoute une ombre à la bordure droite */
     grid-column: 1/2;
-    grid-row: 1/5;
+    grid-row: 3/5;
 
     & h2{
         color: map-get($map: $color, $key: texte );
@@ -45,4 +45,56 @@
 
 .categorieDeServices_list a:hover {
     background-color: map-get($map: $color, $key: texte1); /* Change la couleur de fond au survol */
+}
+@media screen and ( min-width:map-get($version,pc)){
+    .main {
+        display: grid; 
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        grid-auto-rows: minmax(100px, auto);
+    }
+    
+    #sidebar {
+        width: 200px; /* Ajuste la largeur de la sidebar selon tes besoins */
+        background-color: map-get($map: $background-color, $key: background-4 );
+        padding: 10px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Ajoute une ombre à la bordure droite */
+        grid-column: 1/2;
+        grid-row: 1/5;
+    
+        & h2{
+            color: map-get($map: $color, $key: texte );
+            
+        }
+    }
+    
+    .categorieDeServices_list {
+        list-style-type: none;
+        padding: 0;
+        width: 7rem;
+        margin: 1rem auto;
+    }
+    
+    .categorieDeServices_list li {
+        margin-bottom: 10px; /* Ajoute un espace entre chaque élément de la liste */
+        padding: 0rem;
+    }
+    
+    .categorieDeServices_list a {
+        text-decoration: none;
+        color: map-get($map: $color, $key: texte3);
+        display: block;
+        padding: 1rem 0rem;
+        margin: 3rem -2rem;
+        background-color: map-get($map: $background-color, $key: background-1 );
+        border-radius: 5px;
+        transition: background-color 0.3s ease; /* Ajoute une transition pour une animation fluide */
+        text-align: center;
+    }
+    
+    .categorieDeServices_list a:hover {
+        background-color: map-get($map: $color, $key: texte1); /* Change la couleur de fond au survol */
+    }
+    
+
 }

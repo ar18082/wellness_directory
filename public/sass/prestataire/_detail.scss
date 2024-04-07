@@ -1,5 +1,27 @@
+
 .container_card {
-    position: relative;
-    top: 50rem;
-    right: 18rem;
+    grid-column: 2/4;
+    &.card{
+       margin: 5rem 2rem;
+       padding: 1rem;
+       width: 60%;
+       
+        
+    }
+}
+
+@media screen and ( min-width:map-get($version,tablet)){
+    .container_card {
+        position: relative;
+        top: 5rem;
+        right: 5rem;
+    }
+}
+
+@media screen and ( min-width:map-get($version,pc)){
+    .container_card {
+        position: relative;
+        top: 5rem;
+        right: 10rem;
+    }
 }
