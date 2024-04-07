@@ -1,8 +1,8 @@
 .container_serviceEnAvant{
-    grid-column: 2/3;
-    grid-row: 2;
-    margin-left: 47rem;
-    position: relative;
+    margin-top: 5rem;
+    grid-column: 2;
+    grid-row: 3;
+   
    
 }
 
@@ -29,3 +29,75 @@
     opacity: 0;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
+
+
+@media screen and ( min-width:map-get($version,tablet)){
+    .container_serviceEnAvant{
+        grid-column: 2/3;
+        grid-row: 2;
+        margin-left: 30rem;
+        position: relative;
+       
+    }
+    
+    
+    
+    .card_serviceEnAvant{
+        width: 18rem;
+    }
+    
+    .card_serviceEnAvant:hover .serviceEnAvant-body{
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    
+    
+    .serviceEnAvant-body{
+        position :absolute;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        transform: translate(-81%, -103%);
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    
+}
+
+@media screen and ( min-width:map-get($version,pc)){
+    .container_serviceEnAvant{
+        grid-column: 2/3;
+        grid-row: 2;
+        margin-left: 47rem;
+        position: relative;
+       
+    }
+    
+    
+    
+    .card_serviceEnAvant{
+        width: 18rem;
+    }
+    
+    .card_serviceEnAvant:hover .serviceEnAvant-body{
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    
+    
+    .serviceEnAvant-body{
+        position :absolute;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        transform: translate(-81%, -103%);
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    
+}
+
