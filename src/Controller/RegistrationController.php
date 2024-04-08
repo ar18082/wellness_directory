@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             
-            // encode the plain password
+           
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('noReply@annuaireBienEtre.be', 'Annuaire Bien Etre'))
@@ -55,8 +55,7 @@ class RegistrationController extends AbstractController
                     ->subject('Confirmation annuaire bien-être')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
-            // retenir la route d'origine 
+            
             return $this->redirectToRoute('app_dev');
         }
 
@@ -77,12 +76,10 @@ class RegistrationController extends AbstractController
         $user = $utilisateurRepository->find($id);
         
         if (null === $user) {
-            return $this->redirectToRoute('app_home'); // diriger vers formulaire d'inscription complet 
+            return $this->redirectToRoute('app_home'); 
         }
 
-       // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // validate email confirmation link, sets User::isVerified=true and persists
+       
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
@@ -91,7 +88,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+        
         $this->addFlash('success', "Votre adresse e-mail a été vérifiée.");
 
         return $this->redirectToRoute('app_inscription', ['id' => $id]);

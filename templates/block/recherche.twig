@@ -1,26 +1,28 @@
 
-{{ form_start(form) }}
-
-<div class="container containerSearch_form">
-    <div class="row">
-        <div class="col-md-12 mt-3 formInput text-center">
-            {# Affichez le champ select_prestataire #}
-            {{ form_row(form.select_prestataire) }}
-        </div>
-        <div class="col-md-12 mt-3 formInput text-center">
-            {# Affichez le champ select_categorieDeServices #}
-            {{ form_row(form.select_categorieDeServices) }}
-        </div>
-        <div class="col-md-12 mt-3 formInput text-center">
-            {# Affichez le champ select_ville_CP_region #}
-            {{ form_row(form.select_ville_CP_region) }}
-        </div>
-        <div class="col-md-4 formInput formSubmit">
-            
-            {{ form_row(form.submit) }}
+<form method="GET" action="{{ path('resultSearch') }}">
+    <div class="container containerSearch_form">
+        <div class="row">
+            <div class="col-md-12 mt-3 formInput text-center">
+                <label for="select_prestataire">Prestataire</label>
+                <select id="select_prestataire" name="select_prestataire" class="form-select select_prestataire">
+                    {# Ajoutez vos options pour le champ select_prestataire ici #}
+                </select>
+            </div>
+            <div class="col-md-12 mt-3 formInput text-center">
+                <label for="select_categorieDeServices">Catégorie de services</label>
+                <select id="select_categorieDeServices" name="select_categorieDeServices" class="form-select select_categorieDeServices">
+                    {# Ajoutez vos options pour le champ select_categorieDeServices ici #}
+                </select>
+            </div>
+            <div class="col-md-12 mt-3 formInput text-center">
+                <label for="select_ville_CP_region">Ville/CP/Région</label>
+                <select id="select_ville_CP_region" name="select_ville_CP_region" class="form-select select_ville_CP_region">
+                    {# Ajoutez vos options pour le champ select_ville_CP_region ici #}
+                </select>
+            </div>
+            <div class="col-md-4 formInput formSubmit">
+                <button type="submit" class="button">Recherche</button>
+            </div>
         </div>
     </div>
-</div>
-
-
-{{ form_end(form) }}
+</form>

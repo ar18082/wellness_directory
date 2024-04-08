@@ -4,16 +4,16 @@ namespace App\Controller;
 
 use App\Entity\CategorieDeServices;
 use App\Entity\Images;
-use App\Entity\Prestataire;
+
 use App\Entity\Utilisateur;
 use App\Form\RechercheType;
-use App\Service\PrestataireRecent;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class HomeController extends AbstractController
 {
@@ -25,7 +25,7 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $datas = $form->getData();
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('resultSearch');
         }
         
         $repositoryImage = $entityManager->getRepository(Images::class);
@@ -57,8 +57,7 @@ class HomeController extends AbstractController
 
     
       
-        //dd($sliders);
-       
+      
 
         return $this->render('home/index.html.twig', [
             'title' => 'Page d\'acceuil',

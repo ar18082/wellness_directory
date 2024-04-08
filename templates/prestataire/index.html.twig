@@ -29,10 +29,10 @@
         </div>
         <div class="container_card">
             <div class="card" >
-                <img src="{{asset(image.image)}}" class="card-img-top" alt="{{image.id}}">
+                 
                 <div class="card-body">
                     <h5 class="card-title">{{ utilisateur.prestataire.nom}}</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -47,12 +47,28 @@
                         <p>E-mail: {{ utilisateur.email }}</p>
                     </li>
                 </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
+                
             </div> 
         </div>
+          
+        <div class="container_prestataire_simi">
+        {% for prestaSimi in prestatairesSimilaires %}
+            {% if prestaSimi.id != utilisateur.prestataire.id %}
+            
+            <div class ="card_prestataire_simi card" style="width: 18rem;">
+             {% for image in images %}
+                {% if image.prestataire.id == prestaSimi.id %}
+                    <img src="{{asset(image.image)}}" class="img_prestataire_recent card-img-top" alt="{{ image.prestataire.id }}">
+                {% endif %}
+            {% endfor %}
+                <div class="card-body">
+                <h5 class="card-title">{{prestaSimi.nom}}</h5>
+                <a href="{{path('app_prestataire', {'id': prestaSimi.id})}}" class="button">Plus de détails</a>
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}  
+        </div>      
     </div>
 </div>
 

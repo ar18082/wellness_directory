@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CategorieDeServices;
+use App\Entity\Images;
 use App\Entity\Prestataire;
 use App\Entity\Utilisateur;
 use App\Entity\VilleCodePost;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Filesystem\Filesystem;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 
 class SearchController extends AbstractController
@@ -74,7 +76,7 @@ class SearchController extends AbstractController
             $queryBuilder = $repository->createQueryBuilder('v');
             
             if (is_numeric($search)) {
-                // Recherche basée sur un ID numérique
+               
                 $queryBuilder->andWhere('v.CodePost = :CodePost')
                              ->setParameter('CodePost', $search);
 
@@ -85,11 +87,11 @@ class SearchController extends AbstractController
                         'id' => $VilleCodePost->getId(),
                         'CodePost' => $VilleCodePost->getCodePost(),
                         'ville' => $VilleCodePost->getVille(),
-                        // Ajoutez d'autres propriétés si nécessaire
+                        
                     ];
                 }
             } else {
-                // Recherche basée sur une chaîne de caractères
+                
                 $queryBuilder->andWhere('v.ville LIKE :word')
                              ->setParameter('word', '%' . $search . '%');
 
@@ -100,7 +102,7 @@ class SearchController extends AbstractController
                         'id' => $VilleCodePost->getId(),
                         'CodePost' => $VilleCodePost->getCodePost(),
                         'ville' => $VilleCodePost->getVille(),
-                        // Ajoutez d'autres propriétés si nécessaire
+                        
                     ];
                 }
             }
@@ -146,43 +148,121 @@ class SearchController extends AbstractController
     #[Route('/ResultSearchAjax', name: 'ResultSearchAjax', methods:['POST'])]
     public function ResultSearchAjax(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-         // Récupérer les données JSON envoyées dans la requête
+         
         $jsonData = json_decode($request->getContent(), true);
 
-        // Extraire les données individuelles
+      
         $prestataireId = $jsonData['prestataire'];
         $categorieDeServicesId = $jsonData['categorieDeServices'];
 
         $repository = $entityManager->getRepository(Prestataire::class);
         $prestataire = $repository->findOneBy(['id' => $prestataireId]);
 
-        // Vérifiez si le prestataire existe
+        
         if (!$prestataire) {
             return new JsonResponse(['error' => 'Prestataire non trouvé'], 404);
         }
 
-        // Maintenant, vous pouvez accéder à la relation many-to-many pour obtenir les catégories de services associées
+        
         $categories = $prestataire->getCategorieDeServices();
 
-        dd($categories);
+       
         $repositoryUser = $entityManager->getRepository(Utilisateur::class);
         $user = $repositoryUser->findOneBy(['prestataire_id'=>$prestataireId]);
         $VilleCodePost = $user->getVilleCodePost();
 
-        // Construire la réponse JSON avec les données récupérées
+       
         $data = [];
         foreach ($categories as $categorie) {
             if($categorie->getId() == $categorieDeServicesId){
                 $data[] = [
                     'id' => $categorie->getId(),
                     'nom' => $categorie->getNom(),
-                    // Ajoutez d'autres propriétés si nécessaire
+                  
                 ];
             }
             
         }
 
         return new JsonResponse($data);
+    }
+
+    #[Route('/resultSearch', name: 'resultSearch')]
+    public function resultSearch(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $selectPrestataire = $request->query->get('select_prestataire');
+        $selectCategorieDeServices = $request->query->get('select_categorieDeServices');
+        $selectVilleCPRegion = $request->query->get('select_ville_CP_region');
+
+        
+
+        $repository = $entityManager->getRepository(Prestataire::class)->createQueryBuilder('p');
+        
+        
+        
+        if (!empty($selectPrestataire)) {
+            
+            $query = $repository->find($selectPrestataire);
+           
+        } elseif (!empty($selectCategorieDeServices)){
+            $query = $repository->leftJoin('p.CategorieDeServices', 'c')
+            ->andWhere('c.id = :categorieId')
+            ->setParameter('categorieId', $selectCategorieDeServices)
+            ->getQuery();
+        }elseif (!empty($selectVilleCPRegion)) {
+          
+            $repositoryUtilisateur = $entityManager->getRepository(Utilisateur::class);        
+            $queryBuilder = $repositoryUtilisateur->createQueryBuilder('u')
+                ->join('u.prestataire', 'p') // Supposons que l'association entre Utilisateur et Prestataire s'appelle "prestataire"
+                ->where('u.VilleCodePost = :villeCodePost')
+                ->andWhere('u.roles LIKE :roles')
+                ->setParameter('villeCodePost', $selectVilleCPRegion)
+                ->setParameter('roles', 'PRE');
+
+            $query = $queryBuilder->getQuery();
+
+            // Récupération des Utilisateurs filtrés
+            $utilisateurs = $query->getResult();
+
+            $prestatairesPagines = [];
+
+            // Paginer les résultats et récupérer les prestataires associés
+            foreach ($utilisateurs as $utilisateur) {
+                $prestataire = $utilisateur->getPrestataire();
+                if ($prestataire) {
+                    $prestatairesPagines[] = $prestataire;
+                }
+            }
+                    
+        }else {
+            $repository = $entityManager->getRepository(Prestataire::class);
+            $query = $repository->findAll();
+
+           
+        }
+        
+        $paginator = new Paginator($query);
+        $paginator->getQuery()->setFirstResult(0)->setMaxResults(10); 
+
+        
+        $prestataires = $paginator->getIterator()->getArrayCopy();
+  
+       
+        $images = [];
+        foreach ($prestataires as $prestataire) {
+            $image = $entityManager->getRepository(Images::class)->findOneBy(['prestataire' => $prestataire->getId()]);
+            if ($image) {
+                $images[] = $image;
+            }
+        }
+       
+
+        return $this->render('search/index.html.twig', [
+            'prestataires' => $prestataires,
+            'images' =>$images,
+            'controller_name' => 'resultSearch',
+        ]);
+    
     }
        
        

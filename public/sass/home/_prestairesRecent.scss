@@ -41,12 +41,10 @@
 }
 
 @media screen and ( min-width:map-get($version,pc)){
+    
     .container_prestataire_recent{
-        grid-column: 2/6;
-        grid-row: 3;    
-        display: grid; 
-        grid-template-columns: repeat(4, 1fr);
-        grid-gap: 0.3rem;
-        grid-auto-rows: minmax(100px, auto);
+        display: flex;
+        flex-direction: row;
     }
+
 }
