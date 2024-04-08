@@ -13,45 +13,107 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class PrestataireController extends AbstractController
 {
     #[Route('/prestataire/{id}', name: 'app_prestataire')]
     public function index($id, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $repository = $entityManager->getRepository(Utilisateur::class);
-        $utilisateur = $repository->findOneBy(['id' => $id]);
+        $repositoryImage = $entityManager->getRepository(Images::class);
+        $repositoryUtilisateur = $entityManager->getRepository(Utilisateur::class);
+        $repositoryCategorieDeServices = $entityManager->getRepository(CategorieDeServices::class);
 
-        $repository = $entityManager->getRepository(CategorieDeServices::class);
-        $categorieDeServices = $repository->findAll();
+        $utilisateur = $repositoryUtilisateur->findOneBy(['id' => $id]);
+        $presta= $utilisateur->getPrestataire();
 
-       $repositoryImage = $entityManager->getRepository(Images::class);
-       $image = $repositoryImage->findOneBy(['prestataire' => $utilisateur->getPrestataire()->getId()]);
-       $sliders= $repositoryImage->findBy([
-        'prestataire' => null,
-        'categorieDeServices' => NULL,
-        'internaute' => null, 
-    ]);
+        if ($presta !== null) {
+            $repositoryPresta = $entityManager->getRepository(Prestataire::class);
+            $categs = $presta->getCategorieDeServices();
+            $categs->initialize();
 
-       $form = $this->createForm(RechercheType::class);
-       $form->handleRequest($request);
-       if ($form->isSubmitted() && $form->isValid()) {
-           $datas = $form->getData();
+           
+        
+            $prestatairesSimilaires = [];
+        
+            foreach ($categs as $categ) {
+                
+                $prestataires = $repositoryPresta->findByCategorieDeServices($categ);                
+                $prestatairesSimilaires = array_merge($prestatairesSimilaires, $prestataires);
+            }
+        
+            
+        } else {
+          
+            echo "Prestataire non trouvé.";
+        }
+       
+        $categorieDeServices = $repositoryCategorieDeServices->findAll();
 
-           return $this->redirectToRoute('app_home');
-       } 
+       
+        $image = $repositoryImage->findOneBy(['prestataire' => $utilisateur->getPrestataire()->getId()]);
+        $images = $repositoryImage->findByPrestataireNotNull();
+
+    
+        $sliders= $repositoryImage->findBy([
+            'prestataire' => null,
+            'categorieDeServices' => NULL,
+            'internaute' => null, 
+        ]);
+
+       
+
+       
+
+        $form = $this->createForm(RechercheType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $datas = $form->getData();
+
+            return $this->redirectToRoute('resultSearch');
+        } 
+
+
     
 
-       //récupérer les prestataires qui ont les memes catégories de services et qui sont la meme région. 
-       
+          $queryBuilder = $entityManager->createQueryBuilder()
+            ->select('p')
+            ->from('App\Entity\Prestataire', 'p');
+
+        foreach ($categs as $categ) {
+            $queryBuilder
+                ->orWhere(':categ MEMBER OF p.CategorieDeServices')
+                ->setParameter('categ', $categ);
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        // Pagination
+        $page = $request->query->getInt('page', 1);
+        $limit = 10; // Nombre de résultats par page
+
+        $paginator = new Paginator($query);
+        $paginator
+            ->getQuery()
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit);
+
+        $totalItems = count($paginator);
+
+        $maxPage = ceil($totalItems / $limit);
 
         return $this->render('prestataire/index.html.twig', [
             'controller_name' => 'Prestataire',
             'utilisateur' => $utilisateur,
             'categorieDeServices' => $categorieDeServices,
             'image' => $image,
+            'images' => $images,
             'form' =>$form ->createView(),
-            'sliders' => $sliders
+            'sliders' => $sliders,
+            'prestatairesSimilaires' => $prestatairesSimilaires,
+            'totalItems' => $totalItems,
+            'maxPage' => $maxPage,
+            'currentPage' => $page,
         ]);
     }
 

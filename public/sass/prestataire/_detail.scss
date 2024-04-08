@@ -24,4 +24,15 @@
         top: 5rem;
         right: 10rem;
     }
+
+    .container_prestataire_simi{
+        grid-column: 2/4;
+        grid-row: 6;
+        display: flex;
+        flex-wrap: wrap;
+        
+        & .card_prestataire_simi {
+            margin: 1rem;
+        }
+    }
 }

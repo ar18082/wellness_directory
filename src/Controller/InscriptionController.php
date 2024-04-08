@@ -38,12 +38,9 @@ class InscriptionController extends AbstractController
         $repository = $entityManager->getRepository(CategorieDeServices::class);
         $categorieDeServices = $repository->findBy(['Valide'=>true]);
 
-       // dd($categorieDeServices);
+      
 
-       
-
-        
-     
+           
         
         return $this->render('inscription/index.html.twig', [
             'controller_name' => 'test',
@@ -166,7 +163,7 @@ class InscriptionController extends AbstractController
                 $stage->setDebut($request->request->get('dateIn_promo'));
                 $stage->setFin($request->request->get('dateOut_promo'));
                 $stage->setPrestataire($prestataire);
-                // ajouter document pdf, date affichage, catégorie de service 
+                 
 
             }
         

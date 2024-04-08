@@ -3,7 +3,7 @@ window.addEventListener('load', function() {
     let images = document.querySelectorAll('.container_slider_img');
 
     let currentIndex = 0;
-    let slideInterval = setInterval(nextSlide, 5000); // Change d'image toutes les 5 secondes
+    let slideInterval = setInterval(nextSlide, 5000); 
 
     function nextSlide() {
         currentIndex = (currentIndex + 1) % images.length;

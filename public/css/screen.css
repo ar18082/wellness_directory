@@ -545,12 +545,8 @@ h1, h2, h3 {
 }
 @media screen and (min-width: 1200px) {
   .container_prestataire_recent {
-    grid-column: 2/6;
-    grid-row: 3;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 0.3rem;
-    grid-auto-rows: minmax(100px, auto);
+    display: flex;
+    flex-direction: row;
   }
 }
 .container_typeUserBtn {
@@ -615,6 +611,15 @@ h1, h2, h3 {
     position: relative;
     top: 5rem;
     right: 10rem;
+  }
+  .container_prestataire_simi {
+    grid-column: 2/4;
+    grid-row: 6;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .container_prestataire_simi .card_prestataire_simi {
+    margin: 1rem;
   }
 }
 .container_card_categorieDeServices {

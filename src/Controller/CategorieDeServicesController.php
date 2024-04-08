@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\CategorieDeServices;
 use App\Entity\Images;
 use App\Entity\Prestataire;
-use App\Entity\Utilisateur;
+
 use App\Form\RechercheType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,15 +32,14 @@ class CategorieDeServicesController extends AbstractController
         $repositoryPrestataire = $entityManager->getRepository(Prestataire::class);
         $prestataires = $repositoryPrestataire->findByCategorieDeServicesId($id);
 
-        //$userRepository = $entityManager->getRepository(Utilisateur::class);
+        
         
         $images = [];
         foreach ($prestataires as $prestataire) {
-            //$utilisateur = $userRepository->find( $prestataire->getId());
+            
             $images[]= $repositoryImage->findOneBy(['prestataire' => $prestataire->getId()]);
         }
-       // <img src="{{ asset('votre_chemin_vers_l_image/' ~ prestataire.image) }}" class="card-img-top" alt="...">
-        //dd($prestataires);
+       
       
 
         $form = $this->createForm(RechercheType::class);
@@ -48,10 +47,10 @@ class CategorieDeServicesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $datas = $form->getData();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('resultSearch');
         } 
 
-       //dd($image);
+       
         
         return $this->render('categorie_de_services/index.html.twig', [
             'controller_name' => 'CategorieDeServicesController',

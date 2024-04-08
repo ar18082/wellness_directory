@@ -43,7 +43,7 @@
         {% for image in images %}
             {% if image is not null and image.prestataire.id == utilisateur.prestataire.id %}
                <img src="{{asset(image.image)}}" class="img_prestataire_recent card-img-top" alt="{{ image.prestataire.id }}">
-            {% endif %}
+           {% endif %}  
          {% endfor %}
             <div class="card-body">
                <h5 class="card-title">{{utilisateur.prestataire.nom}}</h5>

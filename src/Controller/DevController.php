@@ -47,11 +47,10 @@ class DevController extends AbstractController
 
         $repository = $entityManager->getRepository(CategorieDeServices::class);
         $categorieDeServices = $repository->findAll();
-        // choix d'un service mis en avant pour une durée d'un mois (choix du 1er du mois -> au dernier jour du mois !!! 30,31 ou 28!!!!!)
-        
+       
         foreach ($categorieDeServices as $categorieService) {
             $categorieService->setValide(true);
-            // Enregistrez les modifications dans la base de données si nécessaire
+           
             $entityManager->persist($categorieService);
         }
         
@@ -69,11 +68,10 @@ class DevController extends AbstractController
 
         $repository = $entityManager->getRepository(CategorieDeServices::class);
         $service = $repository->findOneBy(['id' => 3 ]);
-        // choix d'un service mis en avant pour une durée d'un mois (choix du 1er du mois -> au dernier jour du mois !!! 30,31 ou 28!!!!!)
-        
+       
         
             $service->setValide(false);
-            // Enregistrez les modifications dans la base de données si nécessaire
+            
             $entityManager->persist($service);
        
         
@@ -187,6 +185,17 @@ class DevController extends AbstractController
     
         return $this->render('error/error_404.html.twig', [
             // Vous pouvez ajouter des variables à envoyer au template si nécessaire
+        ]);
+    }
+
+    #[Route('/test', name: 'test')]
+    public function test(Request $request, EntityManagerInterface $entityManager, Filesystem $filesystem): Response
+    {
+        $this->getUser();
+
+        
+        return $this->render('dev/test.html.twig', [
+            
         ]);
     }
 }
