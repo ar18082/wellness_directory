@@ -1,29 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{controller_name}}{% endblock %}
+{% block title %}{{ controller_name }}{% endblock %}
 
 {% block body %}
     <div class="container_recherche">
          {% include 'block/recherche.twig' %}
     </div>
-    {% if prestataires is empty %}
+    {% if pagination.getTotalItemCount() == 0 %}
         <p>Aucun résultat trouvé.</p>
     {% else %}
-        {% for prestataire in prestataires %} 
+        {% for prestataire in pagination.items %} 
             <div class="card" style="width: 18rem;">
-                {% for image in images %}  
+               {% for image in images %}  
                     {% if image.prestataire.id == prestataire.id %}          
-                    <img src="{{asset(image.image)}}" class="card-img-top" alt="{{image.id}}">
+                    <img src="{{ asset(image.image) }}" class="card-img-top" alt="{{ image.id }}">
                     {% endif %}     
                 {% endfor %}  
                 <div class="card-body">
-                
                     <h5 class="card-title">{{ prestataire.nom }}</h5>
-                    
-                <a href="{{path('app_prestataire', {'id': prestataire.id})}}" class="button">Plus de détails</a>
-                
+                    <a href="{{ path('app_prestataire', {'id': prestataire.id}) }}" class="button">Plus de détails</a>
                 </div>
             </div>
-        {% endfor %}             
+        {% endfor %}
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% endif %}
 {% endblock %}
+

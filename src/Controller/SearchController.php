@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Filesystem\Filesystem;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class SearchController extends AbstractController
@@ -186,15 +186,112 @@ class SearchController extends AbstractController
 
         return new JsonResponse($data);
     }
+    #[Route('/resultSearch', name: 'resultSearch')]
+    public function resultSearch(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
+    {
+        $selectPrestataire = $request->query->has('select_prestataire') ? (int) $request->query->get('select_prestataire') : null;
+        $selectCategorieDeServices = $request->query->has('select_categorieDeServices') ? (int) $request->query->get('select_categorieDeServices') : null;
+        $selectVilleCPRegion = $request->query->has('select_ville_CP_region') ? (int) $request->query->get('select_ville_CP_region') : null;
 
+        $repository = $entityManager->getRepository(Prestataire::class);
+        $queryBuilder = $repository->createQueryBuilder('p');
+
+        // Appliquer les filtres de recherche
+        if (!is_null($selectPrestataire)) {
+            $queryBuilder->andWhere('p.id = :prestataireId')
+                ->setParameter('prestataireId', $selectPrestataire);
+        } elseif (!is_null($selectCategorieDeServices)) {
+            $queryBuilder->leftJoin('p.CategorieDeServices', 'c')
+                ->andWhere('c.id = :categorieId')
+                ->setParameter('categorieId', $selectCategorieDeServices);
+        } elseif (!is_null($selectVilleCPRegion)) {
+            $queryBuilder->join('p.utilisateurs', 'u')
+                ->andWhere('u.VilleCodePost = :villeCodePost')
+                ->setParameter('villeCodePost', $selectVilleCPRegion)
+                ->andWhere('u.roles LIKE :roles')
+                ->setParameter('roles', 'PRE');
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        // Paginer les résultats
+        $pagination = $paginator->paginate(
+            $query, // Requête à paginer
+            $request->query->getInt('page', 1), // Numéro de page
+            2 // Nombre d'éléments par page
+        );
+
+        $prestataires = $pagination->Getitems();
+
+        
+        $images = [];
+            foreach ($prestataires as $prestataire) {
+                $image = $entityManager->getRepository(Images::class)->findOneBy(['prestataire' => $prestataire->getId()]);
+                if ($image) {
+                    $images[] = $image;
+                }
+            }
+
+            $user = $this->getUser();
+
+            $icone = '';
+            if(!empty($user)){
+               
+                if($user->getRoles()[0]=="PRE"){
+                    $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['prestataire' => $user->getPrestataire()->getId() ]);
+                    
+                   
+                }elseif($user->getRoles()[0]=="INT"){
+                    $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['internaute' => $user->getInternaute()->getId()]);
+                }
+    
+                if($imageIcone == null){
+                    $icone = '';
+                }else{
+                    $icone = $imageIcone->getImage();
+                }
+                    
+                
+                
+            }
+
+        // Passer les résultats paginés à la vue
+        return $this->render('search/index.html.twig', [
+            'pagination' => $pagination,
+            'controller_name' => 'resultSearch',
+            'images' => $images,
+            'icone' =>$icone,
+        ]);
+    }
+
+
+/*
     #[Route('/resultSearch', name: 'resultSearch')]
     public function resultSearch(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $selectPrestataire = $request->query->get('select_prestataire');
-        $selectCategorieDeServices = $request->query->get('select_categorieDeServices');
-        $selectVilleCPRegion = $request->query->get('select_ville_CP_region');
+        if ($request->query->has('select_prestataire')) {
+            $selectPrestataire = intval($request->query->get('select_prestataire'));
+        } else {
+            $selectPrestataire = null;
+        }
+       
+        if ($request->query->get('select_categorieDeServices')) {
+            $selectCategorieDeServices = intval($request->query->get('select_categorieDeServices'));
+        } else {
+            $selectCategorieDeServices = null;
+        }
+        
+        if ($request->query->get('select_ville_CP_region')) {
+            $selectVilleCPRegion = intval($request->query->get('select_ville_CP_region'));
+        } else {
+            $selectVilleCPRegion = null;
+        }
+
+       
+        
 
         
+    
 
         $repository = $entityManager->getRepository(Prestataire::class)->createQueryBuilder('p');
         
@@ -202,7 +299,7 @@ class SearchController extends AbstractController
         
         if (!empty($selectPrestataire)) {
             
-            $query = $repository->find($selectPrestataire);
+            $query = $entityManager->getRepository(Prestataire::class)->find($selectPrestataire);
            
         } elseif (!empty($selectCategorieDeServices)){
             $query = $repository->leftJoin('p.CategorieDeServices', 'c')
@@ -241,7 +338,7 @@ class SearchController extends AbstractController
            
         }
         
-        $paginator = new Paginator($query);
+       $paginator = new Paginator($query);
         $paginator->getQuery()->setFirstResult(0)->setMaxResults(10); 
 
         
@@ -263,7 +360,7 @@ class SearchController extends AbstractController
             'controller_name' => 'resultSearch',
         ]);
     
-    }
+    }*/
        
        
 }

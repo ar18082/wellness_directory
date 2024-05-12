@@ -50,6 +50,25 @@ class CategorieDeServicesController extends AbstractController
             return $this->redirectToRoute('resultSearch');
         } 
 
+        $user = $this->getUser();
+
+        $icone = '';
+        if(!empty($user)){
+           
+            if($user->getRoles()[0]=="PRE"){
+                $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['prestataire' => $user->getPrestataire()->getId() ]);
+                
+               
+            }elseif($user->getRoles()[0]=="INT"){
+                $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['internaute' => $user->getInternaute()->getId()]);
+            }
+
+            if($imageIcone == null){
+                $icone = '';
+            }else{
+                $icone = $imageIcone->getImage();
+            }
+        }
        
         
         return $this->render('categorie_de_services/index.html.twig', [
@@ -60,7 +79,8 @@ class CategorieDeServicesController extends AbstractController
             'form' =>$form ->createView(),
             'sliders' => $sliders,
             'prestataires' => $prestataires,
-            'images' => $images
+            'images' => $images,
+            'icone' => $icone,
         ]);
     }
 }

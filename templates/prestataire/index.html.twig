@@ -29,8 +29,13 @@
         </div>
         <div class="container_card">
             <div class="card" >
-                 
+                <div class="img_prestataire" style='width:40%; margin: 1rem auto'>
+                    <img src="{{asset(image.image)}}" class="img_prestataire card-img-top" alt="{{ image.prestataire.id }}">
+                </div>
+                    
                 <div class="card-body">
+                
+
                     <h5 class="card-title">{{ utilisateur.prestataire.nom}}</h5>
                     
                 </div>
@@ -50,12 +55,20 @@
                 
             </div> 
         </div>
+
+        {# 
+        ajouter les stages et les promotions
+        similaire avec commune
+           
+        
+        #}
           
         <div class="container_prestataire_simi">
         {% for prestaSimi in prestatairesSimilaires %}
             {% if prestaSimi.id != utilisateur.prestataire.id %}
             
             <div class ="card_prestataire_simi card" style="width: 18rem;">
+           
              {% for image in images %}
                 {% if image.prestataire.id == prestaSimi.id %}
                     <img src="{{asset(image.image)}}" class="img_prestataire_recent card-img-top" alt="{{ image.prestataire.id }}">

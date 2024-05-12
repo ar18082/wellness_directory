@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\CategorieDeServices;
 use App\Entity\Images;
 use App\Entity\Prestataire;
+use App\Entity\Promotion;
+use App\Entity\Stage;
 use App\Entity\Utilisateur;
 use App\Form\RechercheType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +25,12 @@ class PrestataireController extends AbstractController
         $repositoryImage = $entityManager->getRepository(Images::class);
         $repositoryUtilisateur = $entityManager->getRepository(Utilisateur::class);
         $repositoryCategorieDeServices = $entityManager->getRepository(CategorieDeServices::class);
+        $repositoryPromotion = $entityManager->getRepository(Promotion::class);
+        $repositoryStage = $entityManager->getRepository(Stage::class);
+
+        $stages = $repositoryStage->findOneBy(['prestataire_id' => $id]);
+        $promotions = $repositoryPromotion->findOneBy(['prestataire_id' => $id]);
+        
 
         $utilisateur = $repositoryUtilisateur->findOneBy(['id' => $id]);
         $presta= $utilisateur->getPrestataire();
@@ -102,6 +110,26 @@ class PrestataireController extends AbstractController
 
         $maxPage = ceil($totalItems / $limit);
 
+        $user = $this->getUser();
+
+        $icone = '';
+        if(!empty($user)){
+           
+            if($user->getRoles()[0]=="PRE"){
+                $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['prestataire' => $user->getPrestataire()->getId() ]);
+                
+               
+            }elseif($user->getRoles()[0]=="INT"){
+                $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['internaute' => $user->getInternaute()->getId()]);
+            }
+
+            if($imageIcone == null){
+                $icone = '';
+            }else{
+                $icone = $imageIcone->getImage();
+            }
+        }
+
         return $this->render('prestataire/index.html.twig', [
             'controller_name' => 'Prestataire',
             'utilisateur' => $utilisateur,
@@ -114,6 +142,7 @@ class PrestataireController extends AbstractController
             'totalItems' => $totalItems,
             'maxPage' => $maxPage,
             'currentPage' => $page,
+            'icone' => $icone
         ]);
     }
 

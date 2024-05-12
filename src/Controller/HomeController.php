@@ -17,9 +17,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
+       
+
+        
         // Création et Gestion du formulaire de recherche
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
@@ -44,8 +48,34 @@ class HomeController extends AbstractController
         $utilisateurs = $repository->FindPrestaRecent();
         $images = [];
         foreach ($utilisateurs as $utilisateur) {
+            
             $images[]= $repositoryImage->findOneBy(['prestataire' => $utilisateur->getPrestataire()->getId()]);
         }
+
+        $user = $this->getUser();
+
+        $icone = '';
+        if(!empty($user)){
+           
+            if($user->getRoles()[0]=="PRE"){
+                $imageIcone = $repositoryImage->findOneBy(['prestataire' => $user->getPrestataire()->getId() ]);
+                
+               
+            }elseif($user->getRoles()[0]=="INT"){
+                $imageIcone = $repositoryImage->findOneBy(['internaute' => $user->getInternaute()->getId()]);
+            }
+
+            if($imageIcone == null){
+                $icone = '';
+            }else{
+                $icone = $imageIcone->getImage();
+            }
+                
+            
+            
+        }
+
+       
 
        
 
@@ -67,7 +97,8 @@ class HomeController extends AbstractController
             'utilisateurs' => $utilisateurs,// 4 derniers prestataires inscrit
             'images' => $images,
             'image_serviceDuMois' =>$image_serviceDuMois,
-            'sliders' => $sliders
+            'sliders' => $sliders,
+            'icone' =>$icone,
 
         ]);
     }
