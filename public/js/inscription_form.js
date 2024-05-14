@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('icone_connexion').style.display='none';  
+    document.getElementById('icone_connexion').style.display='none'; 
+     
 
     document.getElementById('internauteBtn').addEventListener('click', function () {
         document.getElementById('FormInt').style.display = 'block';
@@ -17,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('FormPre').style.display='block'    
         document.getElementById('prestataireForm').style.display = 'grid';
+        document.getElementById('stageForm').style.display = 'none';
+        document.getElementById('promotionForm').style.display = 'none';
         document.getElementById('typeUserBtn').style.display = 'none';
         document.getElementById('title_form').innerText= 'Etape 1/3 : Prestataire';
         document.getElementById('P_Bar').style.display='flex';

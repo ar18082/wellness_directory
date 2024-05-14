@@ -21,13 +21,15 @@
 @media screen and ( min-width:map-get($version,pc)){
     .container_card {
         position: relative;
-        top: 5rem;
+        top: 0rem;
         right: 10rem;
+        width: 60%;
+        
     }
 
     .container_prestataire_simi{
         grid-column: 2/4;
-        grid-row: 6;
+        grid-row: 3;
         display: flex;
         flex-wrap: wrap;
         

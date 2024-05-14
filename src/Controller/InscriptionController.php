@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Faker\Factory as FakerFactory;
+use Faker\Factory;
 
 use App\Entity\Stage;
 use App\Entity\Promotion;
@@ -27,6 +27,7 @@ use App\Form\CategServiceType;
 use App\Form\RechercheType;
 use App\Service\PrestataireRecent;
 
+
 class InscriptionController extends AbstractController
 {
     #[Route('/inscription', name: 'app_inscription')]
@@ -39,13 +40,17 @@ class InscriptionController extends AbstractController
         $categorieDeServices = $repository->findBy(['Valide'=>true]);
 
       
-
-           
+        
+        $faker = Factory::create();
+        
+        
         
         return $this->render('inscription/index.html.twig', [
             'controller_name' => 'test',
             'id' => $id,
             'categorieDeServices'=>$categorieDeServices,
+            'faker' => $faker,
+           
             
                            
            
@@ -56,6 +61,9 @@ class InscriptionController extends AbstractController
     public function inscValid(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
        
+     
+        
+
         $role = $request->request->get('role');
         
 

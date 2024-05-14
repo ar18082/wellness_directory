@@ -6,14 +6,6 @@
 
 <div class="container_main">
     <div class="main">
-        <div class="container_slider">
-         {% for slider in sliders %}
-         <div class="container_slider_img">
-            <img src="{{asset(slider.image)}}" class="slider_img" alt="test">
-         </div>
-         {% endfor %}     
-        
-      </div>
         <div class="container_categorieDeServices" id="sidebar">
             <h2>Categories de services</h2>
             <ul class="categorieDeServices_list">
@@ -40,6 +32,10 @@
                     
                 </div>
                 <ul class="list-group list-group-flush">
+                 <li class="list-group-item">
+                        <p>TVA: {{ utilisateur.prestataire.numTva}}</p>
+                    
+                    </li>
                     <li class="list-group-item">
                         <p>Adresse: {{ utilisateur.AdresseRue }}, {{utilisateur.AdresseNumber}}</p>
                     
@@ -55,13 +51,29 @@
                 
             </div> 
         </div>
-
-        {# 
-        ajouter les stages et les promotions
-        similaire avec commune
-           
-        
-        #}
+        {% for stage in stages %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+        {% endfor %}  
+        {% for promotion in promotions %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+        {% endfor %}  
+       
           
         <div class="container_prestataire_simi">
         {% for prestaSimi in prestatairesSimilaires %}

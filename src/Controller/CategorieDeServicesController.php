@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\CategorieDeServices;
 use App\Entity\Images;
 use App\Entity\Prestataire;
-
+use App\Entity\Promotion;
 use App\Form\RechercheType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,11 +23,12 @@ class CategorieDeServicesController extends AbstractController
         $categorieDeServices =$repository->findAll();
         $repositoryImage = $entityManager->getRepository(Images::class);
         $image = $repositoryImage->findOneBy(['categorieDeServices'=>$id]);
-        $sliders= $repositoryImage->findBy([
-            'prestataire' => null,
-            'categorieDeServices' => NULL,
-            'internaute' => null, 
-        ]);
+
+        $repositoryPromotions = $entityManager->getRepository(Promotion::class); 
+        $promotions = $repositoryPromotions->findBy(['categorieDeServices' =>$id]);
+
+        
+        
 
         $repositoryPrestataire = $entityManager->getRepository(Prestataire::class);
         $prestataires = $repositoryPrestataire->findByCategorieDeServicesId($id);
@@ -69,6 +70,8 @@ class CategorieDeServicesController extends AbstractController
                 $icone = $imageIcone->getImage();
             }
         }
+
+
        
         
         return $this->render('categorie_de_services/index.html.twig', [
@@ -77,10 +80,10 @@ class CategorieDeServicesController extends AbstractController
             'categorieDeServices' => $categorieDeServices,
             'image' => $image,
             'form' =>$form ->createView(),
-            'sliders' => $sliders,
             'prestataires' => $prestataires,
             'images' => $images,
             'icone' => $icone,
+            'promotions' => $promotions,
         ]);
     }
 }
