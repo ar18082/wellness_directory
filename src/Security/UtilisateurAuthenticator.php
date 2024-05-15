@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Entity\Utilisateur;
 
 class UtilisateurAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -47,10 +49,16 @@ class UtilisateurAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    
+        $user = $token->getuser();
+        $roles = $user->getRoles();
+        
+        if($roles[0] == 'PRE'){
+            return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
+        }elseif($roles[0] == 'INT'){
+            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        }
+        
     }
 
     protected function getLoginUrl(Request $request): string

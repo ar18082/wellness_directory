@@ -133,7 +133,12 @@ class InscriptionController extends AbstractController
         $image = new Images();
         $image->setImage('img/'.$role.'/'.$nomFichier);
         $repositoryVilleCP = $entityManager->getRepository(VilleCodePost::class);
-        $villeCP= $repositoryVilleCP->find($request->request->get('cp')); 
+        if($role == 'INT'){
+            $villeCP= $repositoryVilleCP->find($request->request->get('code_postal'));
+        }else{
+            $villeCP= $repositoryVilleCP->find($request->request->get('cp'));
+        }
+         
         $repository = $entityManager->getRepository(Utilisateur::class);
         $utilisateur = $repository->find($utilisateurId);
         $utilisateur->setAdresseNumber($request->request->get('numero'));

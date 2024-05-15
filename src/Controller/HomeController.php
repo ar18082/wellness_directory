@@ -20,9 +20,10 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
         
        
-
+        
         
         // Création et Gestion du formulaire de recherche
         $form = $this->createForm(RechercheType::class);
@@ -52,7 +53,7 @@ class HomeController extends AbstractController
             $images[]= $repositoryImage->findOneBy(['prestataire' => $utilisateur->getPrestataire()->getId()]);
         }
 
-        $user = $this->getUser();
+        
 
         $icone = '';
         if(!empty($user)){
