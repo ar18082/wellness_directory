@@ -22,14 +22,15 @@ class PrestataireRepository extends ServiceEntityRepository
     }
   
     public function findByCategorieDeServices($categ)
-{
-    return $this->createQueryBuilder('p')
-        ->join('p.CategorieDeServices', 'c')
-        ->andWhere('c.id = :categ_id')
-        ->setParameter('categ_id', $categ->getId())
-        ->getQuery()
-        ->getResult();
-}
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.CategorieDeServices', 'c')
+            ->andWhere('c.id = :categ_id')
+            ->setParameter('categ_id', $categ->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
 
     public function findByCategorieDeServicesId(int $categorieDeServicesId): array
     {

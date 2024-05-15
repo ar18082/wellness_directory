@@ -6,14 +6,6 @@
 
 <div class="container_main">
     <div class="main">
-        <div class="container_slider">
-         {% for slider in sliders %}
-         <div class="container_slider_img">
-            <img src="{{asset(slider.image)}}" class="slider_img" alt="test">
-         </div>
-         {% endfor %}     
-        
-      </div>
         <div class="container_categorieDeServices" id="sidebar">
             <h2>Categories de services</h2>
             <ul class="categorieDeServices_list">
@@ -29,12 +21,20 @@
         </div>
         <div class="container_card">
             <div class="card" >
-                 
+                <div class="img_prestataire" style='width:40%; margin: 1rem auto'>
+                    <img src="{{asset(image.image)}}" class="img_prestataire card-img-top" alt="{{ image.prestataire.id }}">
+                </div>
+                    
                 <div class="card-body">
                     <h5 class="card-title">{{ utilisateur.prestataire.nom}}</h5>
+                    <p>{{utilisateur.prestataire.presentation}}<p>
                     
                 </div>
                 <ul class="list-group list-group-flush">
+                 <li class="list-group-item">
+                        <p>TVA: {{ utilisateur.prestataire.numTva}}</p>
+                    
+                    </li>
                     <li class="list-group-item">
                         <p>Adresse: {{ utilisateur.AdresseRue }}, {{utilisateur.AdresseNumber}}</p>
                     
@@ -50,12 +50,54 @@
                 
             </div> 
         </div>
-          
+        <div class="right_sidebar">
+            <div class="container_categorieDeServices">
+                <div class="container_categorieDeServices" >
+                    <h2>Categories de services</h2>
+                    <ul class="categorieDeServices_list">
+                        {% for categorieDeService in utilisateur.prestataire.CategorieDeServices %}
+                            <li class='button'><a href="{{path('app_categorie_de_services', {'id': categorieDeService.id})}}">{{ categorieDeService.nom }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>    
+            </div>
+            <div class="container_stage">
+                <h3>Nos stages</h3>
+                {% for stage in stages %}
+                <div class='card' style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{stage.nom}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{stage.tarif}} €</h6>
+                        <p class="card-text">{{stage.description}}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Du {{ stage.debut|date('d-m-Y') }} au {{ stage.fin|date('d-m-Y') }}</h6>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div> 
+            <div class="container_promo">
+                <h3>Profitez de nos promotions </h3>
+                {% for promotion in promotions %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{promotion.nom}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{promotion.categorieDeServices.nom}}</h6>
+                        <p class="card-text">{{promotion.description}}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Du {{ promotion.debut|date('d-m-Y') }} au {{ promotion.fin|date('d-m-Y') }}</h6>
+                        <a href="#" class="card-link">Télécharger</a>
+                    </div>
+                </div>
+                {% endfor %}  
+            </div>  
+        </div>
+       
         <div class="container_prestataire_simi">
+        <h3>Quelques prestataire similaires </h3>
         {% for prestaSimi in prestatairesSimilaires %}
             {% if prestaSimi.id != utilisateur.prestataire.id %}
             
             <div class ="card_prestataire_simi card" style="width: 18rem;">
+           
              {% for image in images %}
                 {% if image.prestataire.id == prestaSimi.id %}
                     <img src="{{asset(image.image)}}" class="img_prestataire_recent card-img-top" alt="{{ image.prestataire.id }}">

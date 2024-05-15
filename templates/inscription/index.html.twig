@@ -47,19 +47,19 @@
    
   <div class="input-group mb-3">
       <span class="input-group-text" id="lb_nom_int">Nom</span>
-      <input type="text" id="nom_int" name="nom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_nom_int" required>
+      <input type="text" id="nom_int" name="nom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_nom_int" required value="{{faker.lastName()}}">
   </div>
   <div class="input-group mb-3">
       <span class="input-group-text" id="lb_prenom_int">Prénom</span>
-      <input type="text" id="prenom_int" name="prenom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_prenom_int" required>
+      <input type="text" id="prenom_int" name="prenom" class="form-control" aria-label="Sizing example input" aria-describedby="lb_prenom_int" required value="{{faker.firstNameFemale()}}">
   </div>
   <div class="input-group mb-3">
       <span class="input-group-text" id="lb_rue_int">Rue</span>
-      <input type="text" id="rue_int" name="rue" class="form-control" aria-label="Sizing example input" aria-describedby="lb_rue_int" required>
+      <input type="text" id="rue_int" name="rue" class="form-control" aria-label="Sizing example input" aria-describedby="lb_rue_int" required value="{{faker.streetName()}}">
   </div>
   <div class="input-group mb-3">
       <span class="input-group-text" id="lb_numero_int">Numero</span>
-      <input type="text" id="numero_int" name="numero" class="form-control" aria-label="Sizing example input" aria-describedby="lb_numero_int" required>
+      <input type="text" id="numero_int" name="numero" class="form-control" aria-label="Sizing example input" aria-describedby="lb_numero_int" required value="{{faker.buildingNumber()}}">
   </div>
   
   <div class="input-group mb-3">
@@ -70,7 +70,7 @@
         </select>
     </div>
   <div class="input-group mb-3">
-    <label class="input-group-text" for="inputGroupFileInt">Upload</label>
+    <label class="input-group-text" for="inputGroupFileInt">Photo</label>
     <input type="file" name="file_int" class="formFile_int" id="inputGroupFileInt">
   </div>
   <div class="input-group mb-3">

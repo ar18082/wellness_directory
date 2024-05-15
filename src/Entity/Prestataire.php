@@ -45,6 +45,12 @@ class Prestataire
     #[ORM\ManyToMany(targetEntity: CategorieDeServices::class, inversedBy: 'prestataires')]
     private Collection $CategorieDeServices;
 
+    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'prestataire')]
+    private  Collection $utilisateurs;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $presentation = null;
+
    
 
     public function __construct()
@@ -55,6 +61,7 @@ class Prestataire
         $this->favoris = new ArrayCollection();
         $this->promotions = new ArrayCollection();
         $this->CategorieDeServices = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
         
     }
 
@@ -283,6 +290,26 @@ class Prestataire
     public function removeCategorieDeService(CategorieDeServices $categorieDeService): static
     {
         $this->CategorieDeServices->removeElement($categorieDeService);
+
+        return $this;
+    }
+
+     /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): static
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }

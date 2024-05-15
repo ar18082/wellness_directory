@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\CategorieDeServices;
 use App\Entity\Images;
 use App\Entity\Prestataire;
+use App\Entity\Promotion;
+use App\Entity\Stage;
 use App\Entity\Utilisateur;
 use App\Form\RechercheType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +25,19 @@ class PrestataireController extends AbstractController
         $repositoryImage = $entityManager->getRepository(Images::class);
         $repositoryUtilisateur = $entityManager->getRepository(Utilisateur::class);
         $repositoryCategorieDeServices = $entityManager->getRepository(CategorieDeServices::class);
+        $repositoryPromotion = $entityManager->getRepository(Promotion::class);
+        $repositoryStage = $entityManager->getRepository(Stage::class);
+
+        $stages = $repositoryStage->findBy(['prestataire' => $id]);
+        $promotions = $repositoryPromotion->findBy(['prestataire' => $id]);
+        
 
         $utilisateur = $repositoryUtilisateur->findOneBy(['id' => $id]);
         $presta= $utilisateur->getPrestataire();
+
+        $utilisateurs = $repositoryUtilisateur->findBy(['VilleCodePost' => $utilisateur->getVilleCodePost()]);
+
+       
 
         if ($presta !== null) {
             $repositoryPresta = $entityManager->getRepository(Prestataire::class);
@@ -41,6 +53,8 @@ class PrestataireController extends AbstractController
                 $prestataires = $repositoryPresta->findByCategorieDeServices($categ);                
                 $prestatairesSimilaires = array_merge($prestatairesSimilaires, $prestataires);
             }
+
+
         
             
         } else {
@@ -48,6 +62,9 @@ class PrestataireController extends AbstractController
             echo "Prestataire non trouvé.";
         }
        
+
+       
+    
         $categorieDeServices = $repositoryCategorieDeServices->findAll();
 
        
@@ -102,6 +119,69 @@ class PrestataireController extends AbstractController
 
         $maxPage = ceil($totalItems / $limit);
 
+        $user = $this->getUser();
+
+        $icone = '';
+        if(!empty($user)){
+           
+            if($user->getRoles()[0]=="PRE"){
+                $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['prestataire' => $user->getPrestataire()->getId() ]);
+                
+               
+            }elseif($user->getRoles()[0]=="INT"){
+                $imageIcone = $entityManager->getRepository(Images::class)->findOneBy(['internaute' => $user->getInternaute()->getId()]);
+            }
+
+            if($imageIcone == null){
+                $icone = '';
+            }else{
+                $icone = $imageIcone->getImage();
+            }
+        }
+
+       $prestatairesSimilaires = array_filter($prestatairesSimilaires, function($prestataireSimilaire) use ($utilisateurs) {
+            foreach ($utilisateurs as $utilisateur) {
+                if($utilisateur->getPrestataire()!= null){
+                    
+                    if ($prestataireSimilaire->getId() === $utilisateur->getPrestataire()->getId()) {
+                        return true; 
+                    }
+                }
+                
+            }
+            return false; 
+        });
+
+
+
+$queryBuilder = $entityManager->createQueryBuilder()
+    ->select('p')
+    ->from('App\Entity\Prestataire', 'p')
+    ->where('p.id IN (:ids)')
+    ->setParameter('ids', array_map(function($prestataire) {
+        return $prestataire->getId();
+    }, $prestatairesSimilaires));
+
+// Créer un objet Query à partir du QueryBuilder
+$query = $queryBuilder->getQuery();
+
+// Créer un objet Paginator à partir de la requête
+$paginator = new Paginator($query);
+
+// Définir les limites de pagination
+$page = $request->query->getInt('page', 1);
+$limit = 10; // Nombre de résultats par page
+
+$paginator->getQuery()
+    ->setFirstResult(($page - 1) * $limit)
+    ->setMaxResults($limit);
+
+// Récupérer les résultats paginés
+$prestatairesSimilairesPagines = $paginator->getIterator()->getArrayCopy();
+
+    
+      // dd($stages);
+
         return $this->render('prestataire/index.html.twig', [
             'controller_name' => 'Prestataire',
             'utilisateur' => $utilisateur,
@@ -110,10 +190,13 @@ class PrestataireController extends AbstractController
             'images' => $images,
             'form' =>$form ->createView(),
             'sliders' => $sliders,
-            'prestatairesSimilaires' => $prestatairesSimilaires,
+            'prestatairesSimilaires' => $prestatairesSimilairesPagines,
             'totalItems' => $totalItems,
             'maxPage' => $maxPage,
             'currentPage' => $page,
+            'icone' => $icone, 
+            'stages' => $stages,
+            'promotions' => $promotions,
         ]);
     }
 
