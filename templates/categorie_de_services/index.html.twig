@@ -53,17 +53,20 @@
             </div>
         </div>
         <div class="container_promotions">
-            <div class="row">
+            <div class="container_promo">
+                <h3>Profitez de nos promotions </h3>
                 {% for promotion in promotions %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ promotion.nom }}</h5>
-                                <p class="card-text">Site Internet: {{ prestataire.description }}</p>                                
-                            </div>
-                        </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{promotion.nom}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{promotion.categorieDeServices.nom}}</h6>
+                        <p class="card-text">{{promotion.description}}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Du {{ promotion.debut|date('d-m-Y') }} au {{ promotion.fin|date('d-m-Y') }}</h6>
+                        <a href="#" class="card-link">Télécharger</a>
                     </div>
-                {% endfor %}
+                </div>
+                {% endfor %}  
+            
             </div>
         </div>
     </div>
