@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 07, 2024 at 06:14 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- Hôte : 127.0.0.1
+-- Généré le : mer. 15 mai 2024 à 21:25
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wellness_directory`
+-- Base de données : `wellness_directory`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `abus`
+-- Structure de la table `abus`
 --
 
 CREATE TABLE `abus` (
@@ -38,7 +38,7 @@ CREATE TABLE `abus` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bloc`
+-- Structure de la table `bloc`
 --
 
 CREATE TABLE `bloc` (
@@ -50,7 +50,7 @@ CREATE TABLE `bloc` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorie_de_services`
+-- Structure de la table `categorie_de_services`
 --
 
 CREATE TABLE `categorie_de_services` (
@@ -62,7 +62,7 @@ CREATE TABLE `categorie_de_services` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `categorie_de_services`
+-- Déchargement des données de la table `categorie_de_services`
 --
 
 INSERT INTO `categorie_de_services` (`id`, `nom`, `description`, `en_avant`, `valide`) VALUES
@@ -79,7 +79,7 @@ INSERT INTO `categorie_de_services` (`id`, `nom`, `description`, `en_avant`, `va
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commentaire`
+-- Structure de la table `commentaire`
 --
 
 CREATE TABLE `commentaire` (
@@ -95,7 +95,7 @@ CREATE TABLE `commentaire` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `doctrine_migration_versions`
+-- Structure de la table `doctrine_migration_versions`
 --
 
 CREATE TABLE `doctrine_migration_versions` (
@@ -105,18 +105,19 @@ CREATE TABLE `doctrine_migration_versions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `doctrine_migration_versions`
+-- Déchargement des données de la table `doctrine_migration_versions`
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 ('DoctrineMigrations\\Version20240208193048', '2024-02-08 20:35:26', 1160),
 ('DoctrineMigrations\\Version20240323122053', '2024-03-23 12:21:43', 342),
-('DoctrineMigrations\\Version20240324144324', '2024-03-24 14:43:34', 121);
+('DoctrineMigrations\\Version20240324144324', '2024-03-24 14:43:34', 121),
+('DoctrineMigrations\\Version20240515181808', '2024-05-15 18:18:19', 55);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `favori`
+-- Structure de la table `favori`
 --
 
 CREATE TABLE `favori` (
@@ -127,7 +128,7 @@ CREATE TABLE `favori` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `images`
+-- Structure de la table `images`
 --
 
 CREATE TABLE `images` (
@@ -140,35 +141,28 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `images`
+-- Déchargement des données de la table `images`
 --
 
 INSERT INTO `images` (`id`, `internaute_id`, `prestataire_id`, `categorie_de_services_id`, `ordre`, `image`) VALUES
-(3, NULL, 27, NULL, NULL, 'img/PRE/PRE_logo_10.jpeg'),
-(5, NULL, 1, NULL, NULL, 'img/PRE/PRE_logo_13.jpg'),
-(7, NULL, 2, NULL, NULL, 'img/PRE/PRE_logo_7.png'),
-(9, NULL, 3, NULL, NULL, 'img/PRE/PRE_logo_8.jpg'),
-(11, NULL, NULL, 1, NULL, 'img/categorieDeServices/cds_1.png'),
-(12, NULL, NULL, 2, NULL, 'img/categorieDeServices/cds_2.jpg'),
-(13, NULL, NULL, 3, NULL, 'img/categorieDeServices/cds_3.jpg'),
-(14, NULL, NULL, 4, NULL, 'img/categorieDeServices/cds_4.jpeg'),
-(15, NULL, NULL, 5, NULL, 'img/categorieDeServices/cds_5.jpg'),
-(16, NULL, NULL, 6, NULL, 'img/categorieDeServices/cds_6.jpg'),
-(17, NULL, NULL, 7, NULL, 'img/categorieDeServices/cds_7.png'),
-(18, NULL, NULL, 8, NULL, 'img/categorieDeServices/cds_8.jpg'),
-(19, NULL, NULL, 9, NULL, 'img/categorieDeServices/cds_9.jpg'),
-(20, NULL, NULL, NULL, NULL, 'img/autres/slider-1.jpg'),
-(21, NULL, NULL, NULL, NULL, 'img/autres/slider-2.jpg'),
-(22, NULL, NULL, NULL, NULL, 'img/autres/slider-3.jpg'),
-(23, NULL, 29, NULL, NULL, 'img/PRE/PRE_logo_6.jpg'),
-(30, NULL, 36, NULL, NULL, 'img/PRE/PRE_logo_6.jpg'),
-(31, 17, NULL, NULL, NULL, 'img/INT/INT_profil_9.jpg'),
-(32, 18, NULL, NULL, NULL, 'img/INT/INT_profil_12.jpg');
+(1, NULL, NULL, 1, NULL, 'img/categorieDeServices/cds_1.png'),
+(2, NULL, NULL, 2, NULL, 'img/categorieDeServices/cds_2.jpg'),
+(3, NULL, NULL, 3, NULL, 'img/categorieDeServices/cds_3.jpg'),
+(4, NULL, NULL, 4, NULL, 'img/categorieDeServices/cds_4.jpeg'),
+(5, NULL, NULL, 5, NULL, 'img/categorieDeServices/cds_5.jpg'),
+(6, NULL, NULL, 6, NULL, 'img/categorieDeServices/cds_6.jpg'),
+(7, NULL, NULL, 7, NULL, 'img/categorieDeServices/cds_7.png'),
+(8, NULL, NULL, 8, NULL, 'img/categorieDeServices/cds_8.jpg'),
+(9, NULL, NULL, 9, NULL, 'img/categorieDeServices/cds_9.jpg'),
+(10, NULL, NULL, NULL, NULL, 'img/autres/slider-1.jpg'),
+(11, NULL, NULL, NULL, NULL, 'img/autres/slider-2.jpg'),
+(12, NULL, NULL, NULL, NULL, 'img/autres/slider-3.jpg'),
+(13, NULL, 1, NULL, NULL, 'img/PRE/PRE_logo_1.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `internaute`
+-- Structure de la table `internaute`
 --
 
 CREATE TABLE `internaute` (
@@ -178,34 +172,10 @@ CREATE TABLE `internaute` (
   `newsletter` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `internaute`
---
-
-INSERT INTO `internaute` (`id`, `nom`, `prenom`, `newsletter`) VALUES
-(1, 'Rizzo', 'Antonino', 1),
-(2, 'Rizzo', 'Antonino', 1),
-(3, 'Rizzo', 'Antonino', 1),
-(4, 'Rizzo', 'Antonino', 1),
-(5, 'Rizzo', 'Antonino', 1),
-(6, 'Rizzo', 'Antonino', 1),
-(7, 'Rizzo', 'Antonino', 1),
-(8, 'Rizzo', 'Antonino', 1),
-(9, 'Rizzo', 'Antonino', 1),
-(10, 'Rizzo', 'Antonino', 1),
-(11, 'Rizzo', 'Antonino', 1),
-(12, 'Rizzo', 'Antonino', NULL),
-(13, 'Rizzo', 'Antonino', NULL),
-(14, 'Rizzo', 'Antonino', 1),
-(15, 'Rizzo', 'Antonino', 1),
-(16, 'test', 'test', 1),
-(17, 'bello', 'toto', 1),
-(18, 'herbillon ', 'Marc', 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messenger_messages`
+-- Structure de la table `messenger_messages`
 --
 
 CREATE TABLE `messenger_messages` (
@@ -221,7 +191,7 @@ CREATE TABLE `messenger_messages` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `newsletter`
+-- Structure de la table `newsletter`
 --
 
 CREATE TABLE `newsletter` (
@@ -234,7 +204,7 @@ CREATE TABLE `newsletter` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `position`
+-- Structure de la table `position`
 --
 
 CREATE TABLE `position` (
@@ -247,7 +217,7 @@ CREATE TABLE `position` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prestataire`
+-- Structure de la table `prestataire`
 --
 
 CREATE TABLE `prestataire` (
@@ -255,27 +225,21 @@ CREATE TABLE `prestataire` (
   `nom` varchar(255) DEFAULT NULL,
   `site_internet` varchar(255) DEFAULT NULL,
   `num_tel` varchar(255) DEFAULT NULL,
-  `num_tva` varchar(255) DEFAULT NULL
+  `num_tva` varchar(255) DEFAULT NULL,
+  `presentation` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `prestataire`
+-- Déchargement des données de la table `prestataire`
 --
 
-INSERT INTO `prestataire` (`id`, `nom`, `site_internet`, `num_tel`, `num_tva`) VALUES
-(1, 'DB Esthétique', NULL, '0488012282', 'BE0664519383'),
-(2, 'Esther Rizzo', '', '+32488012282', '6666'),
-(3, 'Barber DG', '', '0488012282', '0664519383'),
-(4, 'Esthetica', '', '0488012282', '0664519383'),
-(5, 'Gentry', '', '0488012282', '0664519383'),
-(27, 'Espace 22', 'https://www.espace22.be/', '0488012282', '0666777555'),
-(29, 'cleaners', '', '0488122822', '0111444555'),
-(36, 'cleaners', '', '0488122822', '0111444555');
+INSERT INTO `prestataire` (`id`, `nom`, `site_internet`, `num_tel`, `num_tva`, `presentation`) VALUES
+(1, 'Royer Monnier SA', '', '+33 2 82 02 41 75', '0843955246', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a elit a libero rutrum dictum. Suspendisse condimentum, metus vitae varius scelerisque, leo neque euismod dolor, eu malesuada ligula risus quis dolor. Etiam semper lobortis urna vitae pharetra.');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prestataire_categorie_de_services`
+-- Structure de la table `prestataire_categorie_de_services`
 --
 
 CREATE TABLE `prestataire_categorie_de_services` (
@@ -284,18 +248,16 @@ CREATE TABLE `prestataire_categorie_de_services` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `prestataire_categorie_de_services`
+-- Déchargement des données de la table `prestataire_categorie_de_services`
 --
 
 INSERT INTO `prestataire_categorie_de_services` (`prestataire_id`, `categorie_de_services_id`) VALUES
-(29, 1),
-(36, 1),
-(36, 2);
+(1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promotion`
+-- Structure de la table `promotion`
 --
 
 CREATE TABLE `promotion` (
@@ -311,10 +273,17 @@ CREATE TABLE `promotion` (
   `affichage_jusque` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `promotion`
+--
+
+INSERT INTO `promotion` (`id`, `categorie_de_services_id`, `prestataire_id`, `nom`, `description`, `document_pdf`, `debut`, `fin`, `affichage_de`, `affichage_jusque`) VALUES
+(1, 1, 1, 'vero', 'Nulla quis enim possimus maiores quibusdam. Iste veniam numquam libero velit nihil ut et. Et sequi velit quaerat dolor voluptatum. Non dolorum molestiae quis pariatur facere tenetur.', '', '2024-05-25', '2024-05-30', '2024-05-25', '2024-05-30');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `region`
+-- Structure de la table `region`
 --
 
 CREATE TABLE `region` (
@@ -323,7 +292,7 @@ CREATE TABLE `region` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `region`
+-- Déchargement des données de la table `region`
 --
 
 INSERT INTO `region` (`id`, `region`) VALUES
@@ -340,7 +309,7 @@ INSERT INTO `region` (`id`, `region`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stage`
+-- Structure de la table `stage`
 --
 
 CREATE TABLE `stage` (
@@ -356,10 +325,17 @@ CREATE TABLE `stage` (
   `affichage_jusque` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `stage`
+--
+
+INSERT INTO `stage` (`id`, `prestataire_id`, `nom`, `description`, `tarif`, `info_complementaire`, `debut`, `fin`, `affichage_de`, `affichage_jusque`) VALUES
+(1, 1, 'nihil', 'Id dolor quasi voluptatibus cum. Debitis aliquam delectus eum non quasi odit. Placeat facilis alias fugiat.', '788', NULL, '2024-08-15', '2024-09-15', '2024-05-18', '2024-08-15');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test`
+-- Structure de la table `test`
 --
 
 CREATE TABLE `test` (
@@ -369,7 +345,7 @@ CREATE TABLE `test` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilisateur`
+-- Structure de la table `utilisateur`
 --
 
 CREATE TABLE `utilisateur` (
@@ -391,30 +367,16 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `utilisateur`
+-- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id`, `email`, `roles`, `password`, `is_verified`, `internaute_id`, `prestataire_id`, `adresse_number`, `adresse_rue`, `inscription`, `type_utilisateur`, `nb_essais_infructueux`, `banni`, `inscript_confirm`, `ville_code_post_id`) VALUES
-(1, 'ar18082@me.com', '[\"PRE\"]', '$2y$13$dGgI5va4Ovf4hZRBg6unjeIR/SViuY8I5MOK0mheAC6xfnJPKORwy', 0, NULL, 5, '11', 'rue du test', '2024-01-14', NULL, NULL, 0, 0, 14),
-(2, 'ar18083@me.com', '[\"INT\"]', '$2y$13$sZjty.J0EL9bAZJJ6o4mBuxya4iL4lpyRodAaIoPUmNxryKp5oVSe', 1, 12, NULL, '11', 'dfd', '2024-01-14', NULL, NULL, 0, 0, 2),
-(3, 'ar18084@me.com', '[\"INT\"]', '$2y$13$hZBgDXuYwmMv2kxX3CuBee/Wa9nETwiD54dDPvdd7H9t/SRWMQdFu', 0, 13, NULL, '11', 'dfd', '2024-01-14', NULL, NULL, 0, 0, 12),
-(4, 'ar18085@me.com', '[\"INT\"]', '$2y$13$m8mx2GzG.siSSoL1BXVL6ulh1JQ3lh4q.d37gqz1Lbln6TnyIpazy', 1, 14, NULL, '11', 'dfd', '2024-01-14', NULL, NULL, 0, 0, 36),
-(5, 'natacha@me.com', '[\"INT\"]', '$2y$13$6Jq.0V4jTpr4EB0tJWhnY.n30bCLyUsPzBF8F1iKkjyZVR8vZM2QS', 1, 15, NULL, '11', 'dfd', '2024-01-18', NULL, NULL, 0, 0, 44),
-(6, 'natacha1@me.com', '[\"PRE\"]', '$2y$13$Wg1xb1uN7ETLUSSAN1sXJ.UOqYxdAgZX82ynmyTllpj3wLCT36Ca.', 1, NULL, 36, '7', 'rue du torchon ', '2024-01-18', NULL, NULL, 0, 0, 54),
-(7, 'tom@tom.be', '[\"PRE\"]', '$2y$13$f.Pi5VHubmBvpCKZfmn4.e07ghTJpintimy.SW2tpvf2nia/3xRIi', 1, NULL, 2, NULL, NULL, '2024-02-01', NULL, NULL, 0, 0, 66),
-(8, 'test10@test.be', '[\"PRE\"]', '$2y$13$S43lN0fu4j1BFGFaii.SaupGKN1z1iU9R3/HtROxWhaa/awWcm6w2', 1, NULL, 3, '3', 'rue du signe', '2024-02-20', NULL, NULL, 0, 0, 72),
-(9, 'test11@test.be', '[\"INT\"]', '$2y$13$2hBuIvErtfXvLlt5WPjaEeJz5tmugLDLgEE7bWE/205lHOmi18Era', 1, 17, NULL, '212', 'rue de l\'echelle ', '2024-02-20', NULL, NULL, 0, 0, 8),
-(10, 'test12@test.be', '[\"PRE\"]', '$2y$13$/thDlVloVxoeF8UtlgJlJOGYZz71HQRd7loTO9FYtwLixKAmYgTv6', 1, NULL, 27, '22', 'rue de la station', '2024-02-20', NULL, NULL, 0, 0, 8),
-(11, 'test13@test.be', '[\"INT\"]', '$2y$13$al3YAsD7T/HJuxY0gufG3eTsuWFJzurK.MyJBhMf.ZEMMgOkT0LKm', 1, NULL, NULL, '101', 'Cité du onze novembre ', '2024-02-20', NULL, NULL, 0, 0, 9),
-(12, 'ariz@test.be', '[\"INT\"]', '$2y$13$EbNKPta5OhWcnOZ4v7kWS.6cj2xHYuJW0dQAw2nuI0HvoVNyhk5Oy', 1, 18, NULL, '15', 'rue du dodo ', '2024-02-22', NULL, NULL, 0, 0, 106),
-(13, 'test20@test.be', '[\"PRE\"]', '$2y$13$o3YnzaIJW8UtLchepWu6Ou9fjDnxC98IA.YGK9qEXgUHtlDcLINsq', 1, NULL, 1, '101', 'rue du lolo', '2024-02-22', NULL, NULL, 0, 0, 12),
-(14, 'test21@test.com', '[\"INT\"]', '$2y$13$5v24TyoULX2CWbL3qmDDm.T.rsBT6atjPXkzFzYCuaVPBDIegfvsW', 1, 11, NULL, '11', 'cefe', '2024-02-22', NULL, NULL, 0, 0, 20),
-(15, 'test22@test.be', '[\"INT\"]', '$2y$13$srmv6upncavT5N51mF1wLOrvNvqtLEjy1hTagRxjaFV.1q10XUXOi', 1, NULL, NULL, '11', 'rue du test', '2024-03-12', NULL, NULL, 0, 0, 26);
+(1, 'ar18082@me.com', '[\"PRE\"]', '$2y$13$TsPam/68RVzWFeF74EncdOLe0AMyoQwd1k1O.cpqLiqs.Lg26agES', 1, NULL, 1, '20', 'place Caroline Poulain', '2024-05-15', NULL, NULL, 0, 0, 33);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ville_code_post`
+-- Structure de la table `ville_code_post`
 --
 
 CREATE TABLE `ville_code_post` (
@@ -425,7 +387,7 @@ CREATE TABLE `ville_code_post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `ville_code_post`
+-- Déchargement des données de la table `ville_code_post`
 --
 
 INSERT INTO `ville_code_post` (`id`, `region_id`, `ville`, `code_post`) VALUES
@@ -1063,11 +1025,11 @@ INSERT INTO `ville_code_post` (`id`, `region_id`, `ville`, `code_post`) VALUES
 (632, 6, 'Braine-l\'Alleud', '1428');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `abus`
+-- Index pour la table `abus`
 --
 ALTER TABLE `abus`
   ADD PRIMARY KEY (`id`),
@@ -1075,19 +1037,19 @@ ALTER TABLE `abus`
   ADD KEY `IDX_72C9FD01BA9CD190` (`commentaire_id`);
 
 --
--- Indexes for table `bloc`
+-- Index pour la table `bloc`
 --
 ALTER TABLE `bloc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `categorie_de_services`
+-- Index pour la table `categorie_de_services`
 --
 ALTER TABLE `categorie_de_services`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `commentaire`
+-- Index pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
   ADD PRIMARY KEY (`id`),
@@ -1095,20 +1057,20 @@ ALTER TABLE `commentaire`
   ADD KEY `IDX_67F068BCBE3DB2B7` (`prestataire_id`);
 
 --
--- Indexes for table `doctrine_migration_versions`
+-- Index pour la table `doctrine_migration_versions`
 --
 ALTER TABLE `doctrine_migration_versions`
   ADD PRIMARY KEY (`version`);
 
 --
--- Indexes for table `favori`
+-- Index pour la table `favori`
 --
 ALTER TABLE `favori`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_EF85A2CCBE3DB2B7` (`prestataire_id`);
 
 --
--- Indexes for table `images`
+-- Index pour la table `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
@@ -1117,13 +1079,13 @@ ALTER TABLE `images`
   ADD KEY `IDX_E01FBE6ABE3DB2B7` (`prestataire_id`);
 
 --
--- Indexes for table `internaute`
+-- Index pour la table `internaute`
 --
 ALTER TABLE `internaute`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `messenger_messages`
+-- Index pour la table `messenger_messages`
 --
 ALTER TABLE `messenger_messages`
   ADD PRIMARY KEY (`id`),
@@ -1132,13 +1094,13 @@ ALTER TABLE `messenger_messages`
   ADD KEY `IDX_75EA56E016BA31DB` (`delivered_at`);
 
 --
--- Indexes for table `newsletter`
+-- Index pour la table `newsletter`
 --
 ALTER TABLE `newsletter`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `position`
+-- Index pour la table `position`
 --
 ALTER TABLE `position`
   ADD PRIMARY KEY (`id`),
@@ -1146,13 +1108,13 @@ ALTER TABLE `position`
   ADD UNIQUE KEY `UNIQ_462CE4F55582E9C0` (`bloc_id`);
 
 --
--- Indexes for table `prestataire`
+-- Index pour la table `prestataire`
 --
 ALTER TABLE `prestataire`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `prestataire_categorie_de_services`
+-- Index pour la table `prestataire_categorie_de_services`
 --
 ALTER TABLE `prestataire_categorie_de_services`
   ADD PRIMARY KEY (`prestataire_id`,`categorie_de_services_id`),
@@ -1160,7 +1122,7 @@ ALTER TABLE `prestataire_categorie_de_services`
   ADD KEY `IDX_603DD9AB4A81A587` (`categorie_de_services_id`);
 
 --
--- Indexes for table `promotion`
+-- Index pour la table `promotion`
 --
 ALTER TABLE `promotion`
   ADD PRIMARY KEY (`id`),
@@ -1168,26 +1130,26 @@ ALTER TABLE `promotion`
   ADD KEY `IDX_C11D7DD1BE3DB2B7` (`prestataire_id`);
 
 --
--- Indexes for table `region`
+-- Index pour la table `region`
 --
 ALTER TABLE `region`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `stage`
+-- Index pour la table `stage`
 --
 ALTER TABLE `stage`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_C27C9369BE3DB2B7` (`prestataire_id`);
 
 --
--- Indexes for table `test`
+-- Index pour la table `test`
 --
 ALTER TABLE `test`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `utilisateur`
+-- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
   ADD PRIMARY KEY (`id`),
@@ -1197,144 +1159,144 @@ ALTER TABLE `utilisateur`
   ADD KEY `IDX_1D1C63B358B04C4` (`ville_code_post_id`);
 
 --
--- Indexes for table `ville_code_post`
+-- Index pour la table `ville_code_post`
 --
 ALTER TABLE `ville_code_post`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_8B1BCAA198260155` (`region_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `abus`
+-- AUTO_INCREMENT pour la table `abus`
 --
 ALTER TABLE `abus`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `bloc`
+-- AUTO_INCREMENT pour la table `bloc`
 --
 ALTER TABLE `bloc`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `categorie_de_services`
+-- AUTO_INCREMENT pour la table `categorie_de_services`
 --
 ALTER TABLE `categorie_de_services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `commentaire`
+-- AUTO_INCREMENT pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `favori`
+-- AUTO_INCREMENT pour la table `favori`
 --
 ALTER TABLE `favori`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `images`
+-- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `internaute`
+-- AUTO_INCREMENT pour la table `internaute`
 --
 ALTER TABLE `internaute`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `messenger_messages`
+-- AUTO_INCREMENT pour la table `messenger_messages`
 --
 ALTER TABLE `messenger_messages`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `newsletter`
+-- AUTO_INCREMENT pour la table `newsletter`
 --
 ALTER TABLE `newsletter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `position`
+-- AUTO_INCREMENT pour la table `position`
 --
 ALTER TABLE `position`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `prestataire`
+-- AUTO_INCREMENT pour la table `prestataire`
 --
 ALTER TABLE `prestataire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `promotion`
+-- AUTO_INCREMENT pour la table `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `region`
+-- AUTO_INCREMENT pour la table `region`
 --
 ALTER TABLE `region`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `stage`
+-- AUTO_INCREMENT pour la table `stage`
 --
 ALTER TABLE `stage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `test`
+-- AUTO_INCREMENT pour la table `test`
 --
 ALTER TABLE `test`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `utilisateur`
+-- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `ville_code_post`
+-- AUTO_INCREMENT pour la table `ville_code_post`
 --
 ALTER TABLE `ville_code_post`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=633;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `abus`
+-- Contraintes pour la table `abus`
 --
 ALTER TABLE `abus`
   ADD CONSTRAINT `FK_72C9FD01BA9CD190` FOREIGN KEY (`commentaire_id`) REFERENCES `commentaire` (`id`),
   ADD CONSTRAINT `FK_72C9FD01CAF41882` FOREIGN KEY (`internaute_id`) REFERENCES `internaute` (`id`);
 
 --
--- Constraints for table `commentaire`
+-- Contraintes pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
   ADD CONSTRAINT `FK_67F068BCBE3DB2B7` FOREIGN KEY (`prestataire_id`) REFERENCES `prestataire` (`id`),
   ADD CONSTRAINT `FK_67F068BCCAF41882` FOREIGN KEY (`internaute_id`) REFERENCES `internaute` (`id`);
 
 --
--- Constraints for table `favori`
+-- Contraintes pour la table `favori`
 --
 ALTER TABLE `favori`
   ADD CONSTRAINT `FK_EF85A2CCBE3DB2B7` FOREIGN KEY (`prestataire_id`) REFERENCES `prestataire` (`id`);
 
 --
--- Constraints for table `images`
+-- Contraintes pour la table `images`
 --
 ALTER TABLE `images`
   ADD CONSTRAINT `FK_E01FBE6A4A81A587` FOREIGN KEY (`categorie_de_services_id`) REFERENCES `categorie_de_services` (`id`),
@@ -1342,34 +1304,34 @@ ALTER TABLE `images`
   ADD CONSTRAINT `FK_E01FBE6ACAF41882` FOREIGN KEY (`internaute_id`) REFERENCES `internaute` (`id`);
 
 --
--- Constraints for table `position`
+-- Contraintes pour la table `position`
 --
 ALTER TABLE `position`
   ADD CONSTRAINT `FK_462CE4F55582E9C0` FOREIGN KEY (`bloc_id`) REFERENCES `bloc` (`id`),
   ADD CONSTRAINT `FK_462CE4F5CAF41882` FOREIGN KEY (`internaute_id`) REFERENCES `internaute` (`id`);
 
 --
--- Constraints for table `prestataire_categorie_de_services`
+-- Contraintes pour la table `prestataire_categorie_de_services`
 --
 ALTER TABLE `prestataire_categorie_de_services`
   ADD CONSTRAINT `FK_603DD9AB4A81A587` FOREIGN KEY (`categorie_de_services_id`) REFERENCES `categorie_de_services` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_603DD9ABBE3DB2B7` FOREIGN KEY (`prestataire_id`) REFERENCES `prestataire` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `promotion`
+-- Contraintes pour la table `promotion`
 --
 ALTER TABLE `promotion`
   ADD CONSTRAINT `FK_C11D7DD14A81A587` FOREIGN KEY (`categorie_de_services_id`) REFERENCES `categorie_de_services` (`id`),
   ADD CONSTRAINT `FK_C11D7DD1BE3DB2B7` FOREIGN KEY (`prestataire_id`) REFERENCES `prestataire` (`id`);
 
 --
--- Constraints for table `stage`
+-- Contraintes pour la table `stage`
 --
 ALTER TABLE `stage`
   ADD CONSTRAINT `FK_C27C9369BE3DB2B7` FOREIGN KEY (`prestataire_id`) REFERENCES `prestataire` (`id`);
 
 --
--- Constraints for table `utilisateur`
+-- Contraintes pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
   ADD CONSTRAINT `FK_1D1C63B358B04C4` FOREIGN KEY (`ville_code_post_id`) REFERENCES `ville_code_post` (`id`),
@@ -1377,7 +1339,7 @@ ALTER TABLE `utilisateur`
   ADD CONSTRAINT `FK_1D1C63B3CAF41882` FOREIGN KEY (`internaute_id`) REFERENCES `internaute` (`id`);
 
 --
--- Constraints for table `ville_code_post`
+-- Contraintes pour la table `ville_code_post`
 --
 ALTER TABLE `ville_code_post`
   ADD CONSTRAINT `FK_8B1BCAA198260155` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`);
