@@ -48,6 +48,9 @@ class Prestataire
     #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'prestataire')]
     private  Collection $utilisateurs;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $presentation = null;
+
    
 
     public function __construct()
@@ -297,6 +300,18 @@ class Prestataire
     public function getUtilisateurs(): Collection
     {
         return $this->utilisateurs;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): static
+    {
+        $this->presentation = $presentation;
+
+        return $this;
     }
 
    

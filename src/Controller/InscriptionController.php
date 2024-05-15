@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Faker\Factory;
-
+use DateTime;
 use App\Entity\Stage;
 use App\Entity\Promotion;
 use App\Entity\Internaute;
@@ -92,6 +92,7 @@ class InscriptionController extends AbstractController
             $prestataire->setSiteInternet($request->request->get('Site_internet'));
             $prestataire->setNumTel($request->request->get('telephone'));
             $prestataire->setNumTva($request->request->get('tva'));
+            $prestataire->setPresentation($request->request->get('presentation_pre'));
             $options = $request->get('options');
             foreach ($options as $optionId) {
                 $categorieDeService = $entityManager->getRepository(CategorieDeServices::class)->find($optionId);
@@ -132,7 +133,7 @@ class InscriptionController extends AbstractController
         $image = new Images();
         $image->setImage('img/'.$role.'/'.$nomFichier);
         $repositoryVilleCP = $entityManager->getRepository(VilleCodePost::class);
-        $villeCP= $repositoryVilleCP->find($request->request->get('code_postal')); 
+        $villeCP= $repositoryVilleCP->find($request->request->get('cp')); 
         $repository = $entityManager->getRepository(Utilisateur::class);
         $utilisateur = $repository->find($utilisateurId);
         $utilisateur->setAdresseNumber($request->request->get('numero'));
@@ -157,22 +158,37 @@ class InscriptionController extends AbstractController
                 $stage->setNom($request->request->get('nom_stg'));
                 $stage->setDescription($request->request->get('description_stg'));
                 $stage->setTarif($request->request->get('tarif_stg'));
-                $stage->setDebut($request->request->get('dateIn_stg'));
-                $stage->setFin($request->request->get('dateOut_stg'));
-                $stage->setAffichageDe($request->request->get('affichageIn_stg')); 
-                $stage->setAffichageJusque($request->request->get('affichageOut_stg'));
+                $debut = new DateTime($request->request->get('dateIn_stg')); 
+                $stage->setDebut($debut);
+                $fin = new DateTime($request->request->get('dateOut_stg'));
+                $stage->setFin($fin);
+                $affichageDebut = new DateTime($request->request->get('affichageIn_stg'));
+                $stage->setAffichageDe($affichageDebut); 
+                $affichageFin = new DateTime($request->request->get('affichageOut_stg'));
+                $stage->setAffichageJusque($affichageFin);
                 $stage->setPrestataire($prestataire);
+                $entityManager->persist($stage);
+                $entityManager->flush();
             }
 
             if($request->request->get('nom_promo')){
                 $promo = new Promotion();
                 $promo->setNom($request->request->get('nom_promo'));
-                $stage->setDescription($request->request->get('description_promo'));
-                $stage->setDebut($request->request->get('dateIn_promo'));
-                $stage->setFin($request->request->get('dateOut_promo'));
-                $stage->setPrestataire($prestataire);
-                 
-
+                $promo->setDescription($request->request->get('description_promo'));
+                $debut = new DateTime($request->request->get('dateIn_promo')); 
+                $promo->setDebut($debut);
+                $fin = new DateTime($request->request->get('dateOut_promo'));
+                $promo->setFin($fin);
+                // génére le fichier pdf 
+                $promo->setDocumentPdf('');
+                $affichageDebut = new DateTime($request->request->get('affichageIn_promo'));
+                $promo->setAffichageDe($affichageDebut);
+                $affichageFin = new DateTime($request->request->get('affichageOut_promo'));
+                $promo->setAffichageJusque($affichageFin);
+                $promo->setCategorieDeServices($request->request->get('categService_promo'));
+                $promo->setPrestataire($prestataire);
+                $entityManager->persist($promo);
+                $entityManager->flush();
             }
         
         }

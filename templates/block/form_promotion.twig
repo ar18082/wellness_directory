@@ -24,8 +24,8 @@
         <input type="date" id="affichageOut_promo" name="affichageOut_promo" class="form-control" aria-label="Sizing example input" aria-describedby="lb_dateOut_promo" value="{{ date('+15 days')|date('Y-m-d') }}" >
     </div>
     <div class="input-group mb-3">
-        <label for="categorie-services">Catégorie de services : </label><br>
-        <select id="categorie-services" name="options[]" multiple>
+        <label for="categorie-services_promo">Catégorie de services : </label><br>
+        <select id="categorie-services_promo" name="categService_promo" multiple>
         {% for service in categorieDeServices %}
             <option value="{{service.id}}">{{service.nom}}</option>
          {% endfor %}   

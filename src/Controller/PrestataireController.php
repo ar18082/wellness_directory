@@ -28,8 +28,8 @@ class PrestataireController extends AbstractController
         $repositoryPromotion = $entityManager->getRepository(Promotion::class);
         $repositoryStage = $entityManager->getRepository(Stage::class);
 
-        $stages = $repositoryStage->findOneBy(['prestataire' => $id]);
-        $promotions = $repositoryPromotion->findOneBy(['prestataire' => $id]);
+        $stages = $repositoryStage->findBy(['prestataire' => $id]);
+        $promotions = $repositoryPromotion->findBy(['prestataire' => $id]);
         
 
         $utilisateur = $repositoryUtilisateur->findOneBy(['id' => $id]);
@@ -180,7 +180,7 @@ $paginator->getQuery()
 $prestatairesSimilairesPagines = $paginator->getIterator()->getArrayCopy();
 
     
-        
+      // dd($stages);
 
         return $this->render('prestataire/index.html.twig', [
             'controller_name' => 'Prestataire',
