@@ -169,8 +169,8 @@ class SearchController extends AbstractController
        
         $repositoryUser = $entityManager->getRepository(Utilisateur::class);
         $user = $repositoryUser->findOneBy(['prestataire_id'=>$prestataireId]);
-        $VilleCodePost = $user->getVilleCodePost();
-
+        $villeCodePost = $user->getVilleCodePost();
+        
        
         $data = [];
         foreach ($categories as $categorie) {
@@ -192,7 +192,7 @@ class SearchController extends AbstractController
         $selectPrestataire = $request->query->has('select_prestataire') ? (int) $request->query->get('select_prestataire') : null;
         $selectCategorieDeServices = $request->query->has('select_categorieDeServices') ? (int) $request->query->get('select_categorieDeServices') : null;
         $selectVilleCPRegion = $request->query->has('select_ville_CP_region') ? (int) $request->query->get('select_ville_CP_region') : null;
-
+        
         $repository = $entityManager->getRepository(Prestataire::class);
         $queryBuilder = $repository->createQueryBuilder('p');
 
@@ -210,6 +210,8 @@ class SearchController extends AbstractController
                 ->setParameter('villeCodePost', $selectVilleCPRegion)
                 ->andWhere('u.roles LIKE :roles')
                 ->setParameter('roles', 'PRE');
+
+                
         }
 
         $query = $queryBuilder->getQuery();
@@ -254,6 +256,8 @@ class SearchController extends AbstractController
                 
                 
             }
+
+            
 
         // Passer les résultats paginés à la vue
         return $this->render('search/index.html.twig', [
