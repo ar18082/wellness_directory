@@ -47,6 +47,7 @@
          {% endfor %}
             <div class="card-body">
                <h5 class="card-title">{{utilisateur.prestataire.nom}}</h5>
+               <h5 class="card-title">{{utilisateur.VilleCodePost.CodePost}} {{utilisateur.VilleCodePost.ville}}</h5>
                <a href="{{path('app_prestataire', {'id': utilisateur.id})}}" class="button">Plus de détails</a>
             </div>
          </div>
