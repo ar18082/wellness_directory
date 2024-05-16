@@ -177,6 +177,8 @@ class InscriptionController extends AbstractController
             }
 
             if($request->request->get('nom_promo')){
+
+                
                 $promo = new Promotion();
                 $promo->setNom($request->request->get('nom_promo'));
                 $promo->setDescription($request->request->get('description_promo'));
@@ -190,7 +192,14 @@ class InscriptionController extends AbstractController
                 $promo->setAffichageDe($affichageDebut);
                 $affichageFin = new DateTime($request->request->get('affichageOut_promo'));
                 $promo->setAffichageJusque($affichageFin);
-                $promo->setCategorieDeServices($request->request->get('categService_promo'));
+                $options = $request->get('options');
+            foreach ($options as $optionId) {
+                $categorieDeService = $entityManager->getRepository(CategorieDeServices::class)->find($optionId);
+                if ($categorieDeService) {
+                    $promo->setCategorieDeServices($categorieDeService);
+                }
+            }
+                //$promo->setCategorieDeServices($request->request->get('categService_promo'));
                 $promo->setPrestataire($prestataire);
                 $entityManager->persist($promo);
                 $entityManager->flush();
